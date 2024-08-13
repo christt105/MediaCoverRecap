@@ -11,6 +11,6 @@ func _ready() -> void:
 			NotionSorts.get_sort(NotionDatabaseKeys.PROPERTY_COMPLETED, NotionSorts.SortDirection.ASCENDING)
 		), on_completed)
 
-func on_completed() -> void:
-	print("hello")
+func on_completed(media:Array) -> void:
+	print(media)
 	

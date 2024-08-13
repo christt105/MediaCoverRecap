@@ -1,0 +1,64 @@
+[gd_scene load_steps=2 format=3 uid="uid://b0gaf2pjnhtxk"]
+
+[ext_resource type="Script" path="res://Login/LoginScreen.gd" id="1_dhoeq"]
+
+[node name="LoginScreen" type="Control" node_paths=PackedStringArray("notion_api_secret_line_edit", "notion_media_database_id_line_edit", "error_label", "login_button")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_dhoeq")
+notion_api_secret_line_edit = NodePath("VBoxContainer/NotionApiSecretLineEdit")
+notion_media_database_id_line_edit = NodePath("VBoxContainer/NotionMediaDatabaseLineEdit")
+error_label = NodePath("VBoxContainer/ErrorLabel")
+login_button = NodePath("VBoxContainer/LoginButton")
+
+[node name="TitleLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 46.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 33
+text = "Media Cover Recap"
+horizontal_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 164.0
+offset_top = 75.0
+offset_right = -164.0
+offset_bottom = -51.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 15
+
+[node name="NotionApiSecretLineEdit" type="LineEdit" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 6
+placeholder_text = "Notion Api Integration Secret"
+
+[node name="NotionMediaDatabaseLineEdit" type="LineEdit" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 6
+placeholder_text = "Notion Media Database Id"
+
+[node name="ErrorLabel" type="Label" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 125)
+layout_mode = 2
+size_flags_vertical = 6
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="LoginButton" type="Button" parent="VBoxContainer"]
+custom_minimum_size = Vector2(150, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+text = "Login"
