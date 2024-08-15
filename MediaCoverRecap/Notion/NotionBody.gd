@@ -10,4 +10,3 @@ static func create_body(filter:Dictionary = {}, sorts:Array[Dictionary] = []) ->
 		data["sorts"] = sorts
 	
 	return JSON.stringify(data)
-

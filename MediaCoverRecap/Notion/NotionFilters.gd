@@ -38,4 +38,3 @@ static func completed_on_year(year: int) -> Dictionary:
 			}
 		]
 	}
-

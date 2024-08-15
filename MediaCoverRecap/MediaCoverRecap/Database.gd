@@ -35,4 +35,3 @@ func _on_load_button_pressed() -> void:
 	data.year = year.text.to_int()
 	
 	load.emit(data)
-

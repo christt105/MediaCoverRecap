@@ -195,10 +195,9 @@ text = "Order"
 [node name="OrderOptionButton" type="OptionButton" parent="HBoxContainer/MarginContainer2/VBoxContainer/Configuration/DatabaseSection/MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 8
-item_count = 2
 selected = 0
+item_count = 2
 popup/item_0/text = "Older First"
-popup/item_0/id = 0
 popup/item_1/text = "Newer First"
 popup/item_1/id = 1
 
