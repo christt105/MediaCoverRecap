@@ -134,13 +134,13 @@ size_flags_horizontal = 4
 size_flags_vertical = 0
 text = "Load Images"
 
-[node name="Configuration" type="Panel" parent="HBoxContainer/MarginContainer2/VBoxContainer" node_paths=PackedStringArray("collage", "columns", "order", "image_size_info")]
+[node name="Configuration" type="Panel" parent="HBoxContainer/MarginContainer2/VBoxContainer" node_paths=PackedStringArray("collage", "columns", "sort", "image_size_info")]
 layout_mode = 2
 size_flags_vertical = 3
 script = ExtResource("3_qhacw")
 collage = NodePath("../../../../Collage")
 columns = NodePath("DatabaseSection/Columns")
-order = NodePath("DatabaseSection/MarginContainer/HBoxContainer/OrderOptionButton")
+sort = NodePath("DatabaseSection/MarginContainer/HBoxContainer/OrderOptionButton")
 image_size_info = NodePath("DatabaseSection/ImageSizeLabel")
 
 [node name="DatabaseSection" type="VBoxContainer" parent="HBoxContainer/MarginContainer2/VBoxContainer/Configuration"]
@@ -196,7 +196,7 @@ layout_mode = 2
 [node name="Label" type="Label" parent="HBoxContainer/MarginContainer2/VBoxContainer/Configuration/DatabaseSection/MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Order"
+text = "Sort Order"
 
 [node name="OrderOptionButton" type="OptionButton" parent="HBoxContainer/MarginContainer2/VBoxContainer/Configuration/DatabaseSection/MarginContainer/HBoxContainer"]
 layout_mode = 2
