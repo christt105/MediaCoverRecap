@@ -1,8 +1,16 @@
-[gd_scene load_steps=2 format=3 uid="uid://b3m7vp1y1cuct"]
+[gd_scene load_steps=6 format=3 uid="uid://b3m7vp1y1cuct"]
 
 [ext_resource type="Script" path="res://MediaCoverRecap/MediaCoverRecap.gd" id="1_41chg"]
+[ext_resource type="Script" path="res://MediaCoverRecap/Collage.gd" id="2_n80fv"]
+[ext_resource type="Script" path="res://MediaCoverRecap/Database.gd" id="2_y6cdp"]
 
-[node name="MediaCoverRecap" type="Control" node_paths=PackedStringArray("texture_rect", "load_images_button")]
+[sub_resource type="ViewportTexture" id="ViewportTexture_pkhkj"]
+viewport_path = NodePath("Collage")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uwa5c"]
+bg_color = Color(0.118581, 0.118581, 0.118581, 1)
+
+[node name="MediaCoverRecap" type="Control" node_paths=PackedStringArray("collage_display", "collage", "database_configuration", "save_covers_button")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -10,8 +18,10 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_41chg")
-texture_rect = NodePath("HBoxContainer/TextureRect")
-load_images_button = NodePath("HBoxContainer/VBoxContainer/Button")
+collage_display = NodePath("HBoxContainer/MarginContainer/TextureRect")
+collage = NodePath("Collage")
+database_configuration = NodePath("HBoxContainer/MarginContainer2/VBoxContainer/Database")
+save_covers_button = NodePath("HBoxContainer/MarginContainer2/VBoxContainer/SaveImageButton")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 1
@@ -21,17 +31,194 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="TextureRect" type="TextureRect" parent="HBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+texture = SubResource("ViewportTexture_pkhkj")
 expand_mode = 1
-stretch_mode = 4
+stretch_mode = 5
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
+[node name="MarginContainer2" type="MarginContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/MarginContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Button" type="Button" parent="HBoxContainer/VBoxContainer"]
+[node name="Database" type="Panel" parent="HBoxContainer/MarginContainer2/VBoxContainer" node_paths=PackedStringArray("film", "serie", "videogame", "year", "load_button")]
+layout_mode = 2
+size_flags_vertical = 3
+script = ExtResource("2_y6cdp")
+film = NodePath("DatabaseSection/Filters/FilmCheckBox")
+serie = NodePath("DatabaseSection/Filters/SerieCheckBox")
+videogame = NodePath("DatabaseSection/Filters/VideogameCheckBox")
+year = NodePath("DatabaseSection/LineEdit")
+load_button = NodePath("DatabaseSection/LoadImagesButton")
+
+[node name="DatabaseSection" type="VBoxContainer" parent="HBoxContainer/MarginContainer2/VBoxContainer/Database"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+
+[node name="Panel" type="Panel" parent="HBoxContainer/MarginContainer2/VBoxContainer/Database/DatabaseSection"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_uwa5c")
+
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/MarginContainer2/VBoxContainer/Database/DatabaseSection/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Label" type="Label" parent="HBoxContainer/MarginContainer2/VBoxContainer/Database/DatabaseSection/Panel/MarginContainer"]
+layout_mode = 2
+text = "Database"
+
+[node name="Filters" type="HBoxContainer" parent="HBoxContainer/MarginContainer2/VBoxContainer/Database/DatabaseSection"]
+layout_mode = 2
+size_flags_vertical = 6
+
+[node name="FilmCheckBox" type="CheckBox" parent="HBoxContainer/MarginContainer2/VBoxContainer/Database/DatabaseSection/Filters"]
+layout_mode = 2
+size_flags_horizontal = 3
+button_pressed = true
+text = "Film"
+
+[node name="SerieCheckBox" type="CheckBox" parent="HBoxContainer/MarginContainer2/VBoxContainer/Database/DatabaseSection/Filters"]
+layout_mode = 2
+size_flags_horizontal = 3
+button_pressed = true
+text = "Serie"
+
+[node name="VideogameCheckBox" type="CheckBox" parent="HBoxContainer/MarginContainer2/VBoxContainer/Database/DatabaseSection/Filters"]
+layout_mode = 2
+size_flags_horizontal = 3
+button_pressed = true
+text = "Videogame"
+
+[node name="LineEdit" type="LineEdit" parent="HBoxContainer/MarginContainer2/VBoxContainer/Database/DatabaseSection"]
 layout_mode = 2
 size_flags_horizontal = 4
+size_flags_vertical = 6
+placeholder_text = "Year"
+
+[node name="LoadImagesButton" type="Button" parent="HBoxContainer/MarginContainer2/VBoxContainer/Database/DatabaseSection"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
 text = "Load Images"
+
+[node name="Configuration" type="Panel" parent="HBoxContainer/MarginContainer2/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="DatabaseSection" type="VBoxContainer" parent="HBoxContainer/MarginContainer2/VBoxContainer/Configuration"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 10
+
+[node name="Panel" type="Panel" parent="HBoxContainer/MarginContainer2/VBoxContainer/Configuration/DatabaseSection"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_uwa5c")
+
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/MarginContainer2/VBoxContainer/Configuration/DatabaseSection/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Label" type="Label" parent="HBoxContainer/MarginContainer2/VBoxContainer/Configuration/DatabaseSection/Panel/MarginContainer"]
+layout_mode = 2
+text = "Configuration"
+
+[node name="Columns" type="SpinBox" parent="HBoxContainer/MarginContainer2/VBoxContainer/Configuration/DatabaseSection"]
+custom_minimum_size = Vector2(154.38, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+min_value = 1.0
+value = 1.0
+rounded = true
+allow_greater = true
+suffix = "Columns"
+
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/MarginContainer2/VBoxContainer/Configuration/DatabaseSection"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_right = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/MarginContainer2/VBoxContainer/Configuration/DatabaseSection/MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer/MarginContainer2/VBoxContainer/Configuration/DatabaseSection/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Order"
+
+[node name="OrderOptionButton" type="OptionButton" parent="HBoxContainer/MarginContainer2/VBoxContainer/Configuration/DatabaseSection/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+item_count = 2
+selected = 0
+popup/item_0/text = "Older First"
+popup/item_0/id = 0
+popup/item_1/text = "Newer First"
+popup/item_1/id = 1
+
+[node name="ImageSizeLabel" type="Label" parent="HBoxContainer/MarginContainer2/VBoxContainer/Configuration/DatabaseSection"]
+layout_mode = 2
+text = "Image size: 0px x 0px"
+horizontal_alignment = 1
+
+[node name="SaveImageButton" type="Button" parent="HBoxContainer/MarginContainer2/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Save Image"
+
+[node name="Collage" type="SubViewport" parent="." node_paths=PackedStringArray("grid_container")]
+size = Vector2i(4100, 4012)
+script = ExtResource("2_n80fv")
+grid_container = NodePath("GridContainer")
+columns = 6
+
+[node name="GridContainer" type="GridContainer" parent="Collage"]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+columns = 6

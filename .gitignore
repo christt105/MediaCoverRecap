@@ -14,3 +14,7 @@ export_presets.cfg
 data_*/
 mono_crash.*.json
 MediaCoverRecap/config.secret
+/MediaCoverRecap/Tests/Images
+*.tmp
+/MediaCoverRecap/Tests/Results
+*/.vscode/
