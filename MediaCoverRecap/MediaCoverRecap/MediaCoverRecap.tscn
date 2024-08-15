@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://b3m7vp1y1cuct"]
+[gd_scene load_steps=7 format=3 uid="uid://b3m7vp1y1cuct"]
 
 [ext_resource type="Script" path="res://MediaCoverRecap/MediaCoverRecap.gd" id="1_41chg"]
 [ext_resource type="Script" path="res://MediaCoverRecap/Collage.gd" id="2_n80fv"]
 [ext_resource type="Script" path="res://MediaCoverRecap/Database.gd" id="2_y6cdp"]
+[ext_resource type="Script" path="res://MediaCoverRecap/Configuration.gd" id="3_qhacw"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_pkhkj"]
 viewport_path = NodePath("Collage")
@@ -133,9 +134,14 @@ size_flags_horizontal = 4
 size_flags_vertical = 0
 text = "Load Images"
 
-[node name="Configuration" type="Panel" parent="HBoxContainer/MarginContainer2/VBoxContainer"]
+[node name="Configuration" type="Panel" parent="HBoxContainer/MarginContainer2/VBoxContainer" node_paths=PackedStringArray("collage", "columns", "order", "image_size_info")]
 layout_mode = 2
 size_flags_vertical = 3
+script = ExtResource("3_qhacw")
+collage = NodePath("../../../../Collage")
+columns = NodePath("DatabaseSection/Columns")
+order = NodePath("DatabaseSection/MarginContainer/HBoxContainer/OrderOptionButton")
+image_size_info = NodePath("DatabaseSection/ImageSizeLabel")
 
 [node name="DatabaseSection" type="VBoxContainer" parent="HBoxContainer/MarginContainer2/VBoxContainer/Configuration"]
 layout_mode = 1
@@ -174,7 +180,7 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 0
 min_value = 1.0
-value = 1.0
+value = 6.0
 rounded = true
 allow_greater = true
 suffix = "Columns"
@@ -212,12 +218,14 @@ size_flags_horizontal = 4
 text = "Save Image"
 
 [node name="Collage" type="SubViewport" parent="." node_paths=PackedStringArray("grid_container")]
-size = Vector2i(4100, 4012)
+size = Vector2i(4100, 6924)
 script = ExtResource("2_n80fv")
 grid_container = NodePath("GridContainer")
 columns = 6
 
 [node name="GridContainer" type="GridContainer" parent="Collage"]
+offset_right = 4100.0
+offset_bottom = 6924.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 columns = 6

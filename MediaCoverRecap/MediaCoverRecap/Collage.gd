@@ -1,6 +1,8 @@
 class_name Collage
 extends SubViewport
 
+signal resized(new_size:Vector2i)
+
 @export var grid_container:GridContainer
 
 @export var columns:int:
@@ -8,8 +10,12 @@ extends SubViewport
 		return grid_container.columns
 	set(value):
 		if grid_container != null:
-			grid_container.columns = columns
-			update_size()
+			grid_container.columns = value
+			reset_grid_container_size()
+
+
+func _ready() -> void:
+	grid_container.resized.connect(copy_size)
 
 
 func clear() -> void:
@@ -28,8 +34,13 @@ func create_collage(media:Array[Media]) -> void:
 
 func _cover_updated(image:ImageTexture, texture_rect:TextureRect) -> void:
 	texture_rect.texture = image
-	update_size()
+	reset_grid_container_size()
 
 
-func update_size() -> void:
+func reset_grid_container_size() -> void:
+	grid_container.reset_size()
+
+
+func copy_size() -> void:
 	size = grid_container.size
+	resized.emit(size)
