@@ -119,6 +119,7 @@ theme_override_constants/margin_bottom = 10
 layout_mode = 2
 
 [node name="PropertyName" type="HBoxContainer" parent="HBoxContainer/MarginContainer2/VBoxContainer/Database/DatabaseSection/MarginContainer/VBoxContainer"]
+visible = false
 layout_mode = 2
 
 [node name="Label" type="Label" parent="HBoxContainer/MarginContainer2/VBoxContainer/Database/DatabaseSection/MarginContainer/VBoxContainer/PropertyName"]
@@ -131,6 +132,7 @@ custom_minimum_size = Vector2(215, 0)
 layout_mode = 2
 
 [node name="PropertyType" type="HBoxContainer" parent="HBoxContainer/MarginContainer2/VBoxContainer/Database/DatabaseSection/MarginContainer/VBoxContainer"]
+visible = false
 layout_mode = 2
 
 [node name="Label" type="Label" parent="HBoxContainer/MarginContainer2/VBoxContainer/Database/DatabaseSection/MarginContainer/VBoxContainer/PropertyType"]
@@ -143,6 +145,7 @@ custom_minimum_size = Vector2(215, 0)
 layout_mode = 2
 
 [node name="PropertyCompleted" type="HBoxContainer" parent="HBoxContainer/MarginContainer2/VBoxContainer/Database/DatabaseSection/MarginContainer/VBoxContainer"]
+visible = false
 layout_mode = 2
 
 [node name="Label" type="Label" parent="HBoxContainer/MarginContainer2/VBoxContainer/Database/DatabaseSection/MarginContainer/VBoxContainer/PropertyCompleted"]
@@ -155,6 +158,7 @@ custom_minimum_size = Vector2(215, 0)
 layout_mode = 2
 
 [node name="PropertyCover" type="HBoxContainer" parent="HBoxContainer/MarginContainer2/VBoxContainer/Database/DatabaseSection/MarginContainer/VBoxContainer"]
+visible = false
 layout_mode = 2
 
 [node name="Label" type="Label" parent="HBoxContainer/MarginContainer2/VBoxContainer/Database/DatabaseSection/MarginContainer/VBoxContainer/PropertyCover"]
@@ -167,6 +171,7 @@ custom_minimum_size = Vector2(215, 0)
 layout_mode = 2
 
 [node name="PropertyProperties" type="HBoxContainer" parent="HBoxContainer/MarginContainer2/VBoxContainer/Database/DatabaseSection/MarginContainer/VBoxContainer"]
+visible = false
 layout_mode = 2
 
 [node name="Label" type="Label" parent="HBoxContainer/MarginContainer2/VBoxContainer/Database/DatabaseSection/MarginContainer/VBoxContainer/PropertyProperties"]

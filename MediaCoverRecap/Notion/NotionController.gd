@@ -53,14 +53,22 @@ func _on_get_database_completed(result, response_code, headers, body, on_complet
 	for media in response["results"]:
 		data.append(
 			Media.new(
-			media["properties"][NotionDatabaseKeys.property_name]["title"][0]["plain_text"],
-			get_file_url(media["properties"][NotionDatabaseKeys.property_cover]["files"][0]),
-			media["properties"][NotionDatabaseKeys.property_completed]["date"]["start"],
-			media["properties"][NotionDatabaseKeys.property_type]["select"]["name"],
-			get_properties(media["properties"][NotionDatabaseKeys.property_properties]["multi_select"])
+			get_property_by_id(media, NotionDatabaseKeys.property_name)["title"][0]["plain_text"],
+			get_file_url(get_property_by_id(media, NotionDatabaseKeys.property_cover)["files"][0]),
+			get_property_by_id(media, NotionDatabaseKeys.property_completed)["date"]["start"],
+			get_property_by_id(media, NotionDatabaseKeys.property_type)["select"]["name"],
+			get_properties(get_property_by_id(media, NotionDatabaseKeys.property_properties)["multi_select"])
 			))
 	
 	on_completed.call(data)
+
+
+func get_property_by_id(media:Dictionary, id:String) -> Dictionary:
+	for property in media["properties"]:
+		if media["properties"][property]["id"] == id:
+			return media["properties"][property]
+	
+	return {}
 
 
 func get_file_url(file: Dictionary) -> String:
