@@ -46,7 +46,10 @@ func sort(order:Configuration.Order) -> void:
 		tr.name = m.name
 		tr.texture = m.cover
 		tr.set_meta("media", m)
-	
+
+
+func filter(filters:Array[String]) -> void:
+	pass
 
 
 func sort_media_ascending(a:Media, b:Media) -> bool:

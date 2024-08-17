@@ -53,11 +53,11 @@ func _on_get_database_completed(result, response_code, headers, body, on_complet
 	for media in response["results"]:
 		data.append(
 			Media.new(
-			media["properties"][NotionDatabaseKeys.PROPERTY_NAME]["title"][0]["plain_text"],
-			get_file_url(media["properties"][NotionDatabaseKeys.PROPERTY_COVER]["files"][0]),
-			media["properties"][NotionDatabaseKeys.PROPERTY_COMPLETED]["date"]["start"],
-			media["properties"][NotionDatabaseKeys.PROPERTY_TYPE]["select"]["name"],
-			get_properties(media["properties"][NotionDatabaseKeys.PROPERTY_PROPERTIES]["multi_select"])
+			media["properties"][NotionDatabaseKeys.property_name]["title"][0]["plain_text"],
+			get_file_url(media["properties"][NotionDatabaseKeys.property_cover]["files"][0]),
+			media["properties"][NotionDatabaseKeys.property_completed]["date"]["start"],
+			media["properties"][NotionDatabaseKeys.property_type]["select"]["name"],
+			get_properties(media["properties"][NotionDatabaseKeys.property_properties]["multi_select"])
 			))
 	
 	on_completed.call(data)

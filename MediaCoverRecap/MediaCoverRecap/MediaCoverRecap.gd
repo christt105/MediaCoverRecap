@@ -34,19 +34,12 @@ func _load_images(data:Database.Data) -> void:
 			_get_media_type_filters(data),
 			NotionFilters.completed_on_year(data.year)
 			]
-		}, NotionSorts.get_sort(NotionDatabaseKeys.PROPERTY_COMPLETED, NotionSorts.SortDirection.ASCENDING)
+		}, NotionSorts.get_sort(NotionDatabaseKeys.property_completed, NotionSorts.SortDirection.ASCENDING)
 		), _on_get_media)
 
 
 func _get_media_type_filters(data:Database.Data) -> Dictionary:
 	var filters := []
-	
-	if data.film:
-		filters.push_back(NotionFilters.ONLY_FILMS)
-	if data.serie:
-		filters.push_back(NotionFilters.ONLY_SERIES)
-	if data.videogame:
-		filters.push_back(NotionFilters.ONLY_VIDEOGAMES)
 	
 	return { "or": filters }
 
@@ -85,7 +78,7 @@ func _on_cover_download_request_completed(result, response_code, headers:Array, 
 		push_error("Image from " + media.cover_url + " is empty.")
 		return;
 	
-	image.save_png("res://Tests/Images/" + media.name + ".png")
+	# image.save_png("res://Tests/Images/" + media.name + ".png")
 	var texture = ImageTexture.create_from_image(image)
 	
 	media.cover = texture
@@ -101,6 +94,8 @@ func _get_image_type(headers:Array) -> String:
 
 func _save_images() -> void:
 	var time := Time.get_datetime_dict_from_system()
-	var path:String = "res://Tests/Results/%02d%02d%02d_%02d%02d%02d.png" % [time["year"], time["month"], time["day"], time["hour"], time["minute"], time["second"]]
+	var dir_path := "res://Tests/Results/"
+	var path:String = dir_path + "%02d%02d%02d_%02d%02d%02d.png" % [time["year"], time["month"], time["day"], time["hour"], time["minute"], time["second"]]
+	DirAccess.make_dir_absolute(dir_path)
 	collage.get_texture().get_image().save_png(path)
 	print("CoverRecap saved in " + path)

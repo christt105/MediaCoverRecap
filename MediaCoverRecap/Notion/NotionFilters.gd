@@ -1,23 +1,23 @@
 class_name NotionFilters
 
-const ONLY_SERIES := {
-			"property": NotionDatabaseKeys.PROPERTY_TYPE,
+static var ONLY_SERIES := {
+			"property": NotionDatabaseKeys.property_type,
 			"select": {
 				"equals": "Serie"
 			}
 		}
 
-const ONLY_VIDEOGAMES := {
-			"property": NotionDatabaseKeys.PROPERTY_TYPE,
+static var ONLY_VIDEOGAMES := {
+			"property": NotionDatabaseKeys.property_type,
 			"select": {
-				"equals": NotionDatabaseKeys.TYPE_VIDEOGAME
+				"equals": NotionDatabaseKeys.type_videogame
 			}
 		}
 
-const ONLY_FILMS := {
-			"property": NotionDatabaseKeys.PROPERTY_TYPE,
+static var ONLY_FILMS := {
+			"property": NotionDatabaseKeys.property_type,
 			"select": {
-				"equals": NotionDatabaseKeys.TYPE_FILM
+				"equals": NotionDatabaseKeys.type_film
 			}
 		}
 
@@ -25,13 +25,13 @@ static func completed_on_year(year: int) -> Dictionary:
 	return {
 		"and": [
 			{
-				"property": NotionDatabaseKeys.PROPERTY_COMPLETED,
+				"property": NotionDatabaseKeys.property_completed,
 				"date": {
 					"on_or_after": str(year) + "-01-01"
 				}
 			},
 			{
-				"property": NotionDatabaseKeys.PROPERTY_COMPLETED,
+				"property": NotionDatabaseKeys.property_completed,
 				"date": {
 					"on_or_before": str(year) + "-12-31"
 				}

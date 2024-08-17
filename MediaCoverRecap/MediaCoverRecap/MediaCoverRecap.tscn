@@ -35,6 +35,7 @@ grow_vertical = 2
 [node name="MarginContainer" type="MarginContainer" parent="HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.5
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
@@ -59,15 +60,21 @@ theme_override_constants/margin_bottom = 10
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Database" type="Panel" parent="HBoxContainer/MarginContainer2/VBoxContainer" node_paths=PackedStringArray("film", "serie", "videogame", "year", "load_button")]
+[node name="Database" type="Panel" parent="HBoxContainer/MarginContainer2/VBoxContainer" node_paths=PackedStringArray("property_name", "property_type", "property_completed", "property_cover", "property_properties", "type_film", "type_serie", "type_videogame", "year", "load_button")]
 layout_mode = 2
 size_flags_vertical = 3
+size_flags_stretch_ratio = 2.0
 script = ExtResource("2_y6cdp")
-film = NodePath("DatabaseSection/Filters/FilmCheckBox")
-serie = NodePath("DatabaseSection/Filters/SerieCheckBox")
-videogame = NodePath("DatabaseSection/Filters/VideogameCheckBox")
-year = NodePath("DatabaseSection/LineEdit")
-load_button = NodePath("DatabaseSection/LoadImagesButton")
+property_name = NodePath("DatabaseSection/MarginContainer/VBoxContainer/PropertyName/LineEdit")
+property_type = NodePath("DatabaseSection/MarginContainer/VBoxContainer/PropertyType/LineEdit")
+property_completed = NodePath("DatabaseSection/MarginContainer/VBoxContainer/PropertyCompleted/LineEdit")
+property_cover = NodePath("DatabaseSection/MarginContainer/VBoxContainer/PropertyCover/LineEdit")
+property_properties = NodePath("DatabaseSection/MarginContainer/VBoxContainer/PropertyProperties/LineEdit")
+type_film = NodePath("DatabaseSection/MarginContainer/VBoxContainer/TypeFilm/LineEdit")
+type_serie = NodePath("DatabaseSection/MarginContainer/VBoxContainer/TypeSerie/LineEdit")
+type_videogame = NodePath("DatabaseSection/MarginContainer/VBoxContainer/TypeVideogame/LineEdit")
+year = NodePath("DatabaseSection/MarginContainer/VBoxContainer/Year/LineEdit")
+load_button = NodePath("DatabaseSection/MarginContainer/VBoxContainer/LoadImagesButton")
 
 [node name="DatabaseSection" type="VBoxContainer" parent="HBoxContainer/MarginContainer2/VBoxContainer/Database"]
 layout_mode = 1
@@ -100,45 +107,141 @@ theme_override_constants/margin_bottom = 5
 layout_mode = 2
 text = "Database"
 
-[node name="Filters" type="HBoxContainer" parent="HBoxContainer/MarginContainer2/VBoxContainer/Database/DatabaseSection"]
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/MarginContainer2/VBoxContainer/Database/DatabaseSection"]
 layout_mode = 2
-size_flags_vertical = 6
+size_flags_vertical = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
 
-[node name="FilmCheckBox" type="CheckBox" parent="HBoxContainer/MarginContainer2/VBoxContainer/Database/DatabaseSection/Filters"]
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/MarginContainer2/VBoxContainer/Database/DatabaseSection/MarginContainer"]
 layout_mode = 2
-size_flags_horizontal = 3
-button_pressed = true
-text = "Film"
 
-[node name="SerieCheckBox" type="CheckBox" parent="HBoxContainer/MarginContainer2/VBoxContainer/Database/DatabaseSection/Filters"]
+[node name="PropertyName" type="HBoxContainer" parent="HBoxContainer/MarginContainer2/VBoxContainer/Database/DatabaseSection/MarginContainer/VBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 3
-button_pressed = true
-text = "Serie"
 
-[node name="VideogameCheckBox" type="CheckBox" parent="HBoxContainer/MarginContainer2/VBoxContainer/Database/DatabaseSection/Filters"]
+[node name="Label" type="Label" parent="HBoxContainer/MarginContainer2/VBoxContainer/Database/DatabaseSection/MarginContainer/VBoxContainer/PropertyName"]
 layout_mode = 2
 size_flags_horizontal = 3
-button_pressed = true
-text = "Videogame"
+text = "Property Name"
 
-[node name="LineEdit" type="LineEdit" parent="HBoxContainer/MarginContainer2/VBoxContainer/Database/DatabaseSection"]
+[node name="LineEdit" type="LineEdit" parent="HBoxContainer/MarginContainer2/VBoxContainer/Database/DatabaseSection/MarginContainer/VBoxContainer/PropertyName"]
+custom_minimum_size = Vector2(215, 0)
+layout_mode = 2
+
+[node name="PropertyType" type="HBoxContainer" parent="HBoxContainer/MarginContainer2/VBoxContainer/Database/DatabaseSection/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer/MarginContainer2/VBoxContainer/Database/DatabaseSection/MarginContainer/VBoxContainer/PropertyType"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Property Type"
+
+[node name="LineEdit" type="LineEdit" parent="HBoxContainer/MarginContainer2/VBoxContainer/Database/DatabaseSection/MarginContainer/VBoxContainer/PropertyType"]
+custom_minimum_size = Vector2(215, 0)
+layout_mode = 2
+
+[node name="PropertyCompleted" type="HBoxContainer" parent="HBoxContainer/MarginContainer2/VBoxContainer/Database/DatabaseSection/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer/MarginContainer2/VBoxContainer/Database/DatabaseSection/MarginContainer/VBoxContainer/PropertyCompleted"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Property Completed"
+
+[node name="LineEdit" type="LineEdit" parent="HBoxContainer/MarginContainer2/VBoxContainer/Database/DatabaseSection/MarginContainer/VBoxContainer/PropertyCompleted"]
+custom_minimum_size = Vector2(215, 0)
+layout_mode = 2
+
+[node name="PropertyCover" type="HBoxContainer" parent="HBoxContainer/MarginContainer2/VBoxContainer/Database/DatabaseSection/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer/MarginContainer2/VBoxContainer/Database/DatabaseSection/MarginContainer/VBoxContainer/PropertyCover"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Property Cover"
+
+[node name="LineEdit" type="LineEdit" parent="HBoxContainer/MarginContainer2/VBoxContainer/Database/DatabaseSection/MarginContainer/VBoxContainer/PropertyCover"]
+custom_minimum_size = Vector2(215, 0)
+layout_mode = 2
+
+[node name="PropertyProperties" type="HBoxContainer" parent="HBoxContainer/MarginContainer2/VBoxContainer/Database/DatabaseSection/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer/MarginContainer2/VBoxContainer/Database/DatabaseSection/MarginContainer/VBoxContainer/PropertyProperties"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Property Properties"
+
+[node name="LineEdit" type="LineEdit" parent="HBoxContainer/MarginContainer2/VBoxContainer/Database/DatabaseSection/MarginContainer/VBoxContainer/PropertyProperties"]
+custom_minimum_size = Vector2(215, 0)
+layout_mode = 2
+
+[node name="TypeFilm" type="HBoxContainer" parent="HBoxContainer/MarginContainer2/VBoxContainer/Database/DatabaseSection/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer/MarginContainer2/VBoxContainer/Database/DatabaseSection/MarginContainer/VBoxContainer/TypeFilm"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Type Film"
+
+[node name="LineEdit" type="LineEdit" parent="HBoxContainer/MarginContainer2/VBoxContainer/Database/DatabaseSection/MarginContainer/VBoxContainer/TypeFilm"]
+custom_minimum_size = Vector2(215, 0)
+layout_mode = 2
+
+[node name="TypeSerie" type="HBoxContainer" parent="HBoxContainer/MarginContainer2/VBoxContainer/Database/DatabaseSection/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer/MarginContainer2/VBoxContainer/Database/DatabaseSection/MarginContainer/VBoxContainer/TypeSerie"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Type Serie"
+
+[node name="LineEdit" type="LineEdit" parent="HBoxContainer/MarginContainer2/VBoxContainer/Database/DatabaseSection/MarginContainer/VBoxContainer/TypeSerie"]
+custom_minimum_size = Vector2(215, 0)
+layout_mode = 2
+
+[node name="TypeVideogame" type="HBoxContainer" parent="HBoxContainer/MarginContainer2/VBoxContainer/Database/DatabaseSection/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer/MarginContainer2/VBoxContainer/Database/DatabaseSection/MarginContainer/VBoxContainer/TypeVideogame"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Type Videogame"
+
+[node name="LineEdit" type="LineEdit" parent="HBoxContainer/MarginContainer2/VBoxContainer/Database/DatabaseSection/MarginContainer/VBoxContainer/TypeVideogame"]
+custom_minimum_size = Vector2(215, 0)
+layout_mode = 2
+
+[node name="Year" type="HBoxContainer" parent="HBoxContainer/MarginContainer2/VBoxContainer/Database/DatabaseSection/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer/MarginContainer2/VBoxContainer/Database/DatabaseSection/MarginContainer/VBoxContainer/Year"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Year"
+
+[node name="LineEdit" type="LineEdit" parent="HBoxContainer/MarginContainer2/VBoxContainer/Database/DatabaseSection/MarginContainer/VBoxContainer/Year"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 6
 placeholder_text = "Year"
 
-[node name="LoadImagesButton" type="Button" parent="HBoxContainer/MarginContainer2/VBoxContainer/Database/DatabaseSection"]
+[node name="LoadImagesButton" type="Button" parent="HBoxContainer/MarginContainer2/VBoxContainer/Database/DatabaseSection/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
-size_flags_vertical = 0
+size_flags_vertical = 10
 text = "Load Images"
 
-[node name="Configuration" type="Panel" parent="HBoxContainer/MarginContainer2/VBoxContainer" node_paths=PackedStringArray("collage", "columns", "sort", "image_size_info")]
+[node name="Configuration" type="Panel" parent="HBoxContainer/MarginContainer2/VBoxContainer" node_paths=PackedStringArray("collage", "film", "serie", "videogame", "columns", "sort", "image_size_info")]
 layout_mode = 2
 size_flags_vertical = 3
 script = ExtResource("3_qhacw")
 collage = NodePath("../../../../Collage")
+film = NodePath("DatabaseSection/Filters/FilmCheckBox")
+serie = NodePath("DatabaseSection/Filters/SerieCheckBox")
+videogame = NodePath("DatabaseSection/Filters/VideogameCheckBox")
 columns = NodePath("DatabaseSection/Columns")
 sort = NodePath("DatabaseSection/MarginContainer/HBoxContainer/OrderOptionButton")
 image_size_info = NodePath("DatabaseSection/ImageSizeLabel")
@@ -173,6 +276,28 @@ theme_override_constants/margin_bottom = 5
 [node name="Label" type="Label" parent="HBoxContainer/MarginContainer2/VBoxContainer/Configuration/DatabaseSection/Panel/MarginContainer"]
 layout_mode = 2
 text = "Configuration"
+
+[node name="Filters" type="HBoxContainer" parent="HBoxContainer/MarginContainer2/VBoxContainer/Configuration/DatabaseSection"]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="FilmCheckBox" type="CheckBox" parent="HBoxContainer/MarginContainer2/VBoxContainer/Configuration/DatabaseSection/Filters"]
+layout_mode = 2
+size_flags_horizontal = 3
+button_pressed = true
+text = "Film"
+
+[node name="SerieCheckBox" type="CheckBox" parent="HBoxContainer/MarginContainer2/VBoxContainer/Configuration/DatabaseSection/Filters"]
+layout_mode = 2
+size_flags_horizontal = 3
+button_pressed = true
+text = "Serie"
+
+[node name="VideogameCheckBox" type="CheckBox" parent="HBoxContainer/MarginContainer2/VBoxContainer/Configuration/DatabaseSection/Filters"]
+layout_mode = 2
+size_flags_horizontal = 3
+button_pressed = true
+text = "Videogame"
 
 [node name="Columns" type="SpinBox" parent="HBoxContainer/MarginContainer2/VBoxContainer/Configuration/DatabaseSection"]
 custom_minimum_size = Vector2(154.38, 0)
@@ -228,4 +353,6 @@ offset_right = 4100.0
 offset_bottom = 6924.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+theme_override_constants/h_separation = 0
+theme_override_constants/v_separation = 0
 columns = 6

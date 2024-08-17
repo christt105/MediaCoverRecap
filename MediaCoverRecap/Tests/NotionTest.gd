@@ -8,7 +8,7 @@ func _ready() -> void:
 	
 	notion_controller.get_media(DATABASE_ID, NotionBody.create_body(
 			{"and": [NotionFilters.ONLY_VIDEOGAMES, NotionFilters.completed_on_year(2023)]},
-			NotionSorts.get_sort(NotionDatabaseKeys.PROPERTY_COMPLETED, NotionSorts.SortDirection.ASCENDING)
+			NotionSorts.get_sort(NotionDatabaseKeys.property_completed, NotionSorts.SortDirection.ASCENDING)
 		), on_completed)
 
 func on_completed(media:Array) -> void:

@@ -1,11 +1,11 @@
 class_name NotionDatabaseKeys
 
-const PROPERTY_NAME := "Nombre"
-const PROPERTY_TYPE := "Tipo"
-const PROPERTY_COMPLETED := "Completado"
-const PROPERTY_COVER := "Cover"
-const PROPERTY_PROPERTIES := "Propiedades"
+static var property_name := "Nombre"
+static var property_type := "Tipo"
+static var property_completed := "Completado"
+static var property_cover := "Cover"
+static var property_properties := "Propiedades"
 
-const TYPE_FILM := "Película"
-const TYPE_SERIE := "Serie"
-const TYPE_VIDEOGAME := "Videojuego"
+static var type_film := "Película"
+static var type_serie := "Serie"
+static var type_videogame := "Videojuego"
