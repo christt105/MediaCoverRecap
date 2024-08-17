@@ -14,6 +14,13 @@ signal resized(new_size:Vector2i)
 			reset_grid_container_size()
 
 
+var media_type_filter:Dictionary = {
+	NotionDatabaseKeys.type_film: true,
+	NotionDatabaseKeys.type_serie: true,
+	NotionDatabaseKeys.type_videogame: true,
+}
+
+
 func _ready() -> void:
 	grid_container.resized.connect(copy_size)
 
@@ -23,14 +30,18 @@ func clear() -> void:
 		child.queue_free()
 
 
+func set_media_type_filter(key:String, toggled_on:bool) -> void:
+	media_type_filter[key] = toggled_on
+	refresh()
+
+
 func create_collage(media:Array[Media]) -> void:
 	for m in media:
 		var texture_rect = TextureRect.new()
-		texture_rect.set_meta("media", m)
-		texture_rect.name = m.name
 		texture_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
 		grid_container.add_child(texture_rect)
 		m.cover_updated.connect(_cover_updated.bind(texture_rect))
+		set_cover(texture_rect, m)
 
 
 func sort(order:Configuration.Order) -> void:
@@ -41,15 +52,21 @@ func sort(order:Configuration.Order) -> void:
 	media.sort_custom(sort_media_ascending if order == Configuration.Order.OLDER else sort_media_descending)
 	
 	for i in range(media.size()):
-		var m = media[i]
 		var tr := grid_container.get_child(i) as TextureRect
-		tr.name = m.name
-		tr.texture = m.cover
-		tr.set_meta("media", m)
+		set_cover(tr, media[i])
 
 
-func filter(filters:Array[String]) -> void:
-	pass
+func set_cover(texture_rect:TextureRect, media:Media) -> void:
+	texture_rect.set_meta("media", media)
+	texture_rect.name = media.name
+	texture_rect.texture = media.cover
+	texture_rect.visible = media_type_filter[media.type]
+
+
+func refresh() -> void:
+	for m in grid_container.get_children():
+		var media := m.get_meta("media") as Media
+		m.visible = media_type_filter[media.type]
 
 
 func sort_media_ascending(a:Media, b:Media) -> bool:

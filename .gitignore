@@ -18,3 +18,4 @@ MediaCoverRecap/config.secret
 *.tmp
 /MediaCoverRecap/Tests/Results
 */.vscode/
+/MediaCoverRecap/Build

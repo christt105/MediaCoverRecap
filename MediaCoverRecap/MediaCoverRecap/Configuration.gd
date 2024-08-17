@@ -20,9 +20,10 @@ func _ready() -> void:
 	columns.value_changed.connect(_on_columns_changed)
 	sort.item_selected.connect(_on_sort_changed)
 	
-	film.toggled.connect(_on_film_toggled)
-	serie.toggled.connect(_on_serie_toggled)
-	videogame.toggled.connect(_on_videogame_toggled)
+	# TODO: Do it automatically getting the data from the database fields
+	film.toggled.connect(_on_filter_type_toggled.bind(NotionDatabaseKeys.type_film))
+	serie.toggled.connect(_on_filter_type_toggled.bind(NotionDatabaseKeys.type_serie))
+	videogame.toggled.connect(_on_filter_type_toggled.bind(NotionDatabaseKeys.type_videogame))
 
 
 func _on_collage_resized(size:Vector2i) -> void:
@@ -37,13 +38,5 @@ func _on_sort_changed(index:int) -> void:
 	collage.sort(index)
 
 
-func _on_film_toggled(toggled_on:bool) -> void:
-	pass
-
-
-func _on_serie_toggled(toggled_on:bool) -> void:
-	pass
-
-
-func _on_videogame_toggled(toggled_on:bool) -> void:
-	pass
+func _on_filter_type_toggled(toggled_on:bool, key:String) -> void:
+	collage.set_media_type_filter(key, toggled_on)
