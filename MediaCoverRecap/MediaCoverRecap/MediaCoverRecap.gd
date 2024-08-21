@@ -1,3 +1,4 @@
+class_name MediaCoverRecap
 extends Control
 
 
@@ -8,40 +9,39 @@ extends Control
 
 
 var _notion:NotionController
-var _database_id:String
+var _database:Dictionary # TODO: Convert to class
 
 
 func _ready() -> void:
-	if get_parent() == get_tree().root:
+	if get_parent() == get_tree().root and _notion == null:
 		print("Running the scene individually")
 		var notion := NotionController.new(NotionSecretGetter.GetNotionSecret())
 		add_child(notion)
-		init(notion, LoginScreen.DEFAULT_DATABASE_ID)
+		
+		var response := await notion.get_database(LoginScreen.DEFAULT_DATABASE_ID)
+		if response.status != HTTPClient.RESPONSE_OK:
+			push_error(response.message)
+			return
+		print("Database loaded correctly")
+		init(notion, response["body"])
 	
 	database_configuration.load.connect(_load_images)
 	save_covers_button.pressed.connect(_save_images)
 
 
-func init(notion:NotionController, database_id:String) -> void:
+func init(notion:NotionController, database:Dictionary) -> void:
 	_notion = notion
-	_database_id = database_id
+	_database = database
 
 
 func _load_images(data:Database.Data) -> void:
-	_notion.get_media(_database_id, NotionBody.create_body(
+	_notion.get_media(_database["id"], NotionBody.create_body(
 		{
 			"and": [
-			_get_media_type_filters(data),
 			NotionFilters.completed_on_year(data.year)
 			]
 		}, NotionSorts.get_sort(NotionDatabaseKeys.property_completed, NotionSorts.SortDirection.ASCENDING)
 		), _on_get_media)
-
-
-func _get_media_type_filters(data:Database.Data) -> Dictionary:
-	var filters := []
-	
-	return { "or": filters }
 
 
 func _on_get_media(media:Array[Media]) -> void:

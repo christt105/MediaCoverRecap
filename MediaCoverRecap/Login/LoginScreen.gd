@@ -3,8 +3,7 @@ extends Control
 
 const DEFAULT_DATABASE_ID = "d2e54cb577014d5a920cc8ce3aebe651"
 
-
-signal login_done(notion_clinet:NotionController)
+const RECAP_SCENE:PackedScene = preload("res://MediaCoverRecap/MediaCoverRecap.tscn")
 
 
 @export var notion_api_secret_line_edit:LineEdit
@@ -26,21 +25,34 @@ func on_login_button_pressed() -> void:
 		write_error("Notion api secret cannot be empty")
 		return
 	
-	if notion_media_database_id_line_edit.text.is_empty():
+	var database_id := notion_media_database_id_line_edit.text
+	
+	if database_id.is_empty():
 		write_error("Notion database id field cannot be empty")
 		return
 	
 	var notion := NotionController.new(notion_api_secret_line_edit.text)
-	add_child(notion)
+	get_tree().root.add_child(notion)
 	
-	var response := await notion.check_database(notion_media_database_id_line_edit.text)
+	var response := await notion.get_database(database_id)
 	if response.status != HTTPClient.RESPONSE_OK:
 		write_error(response.message)
 		return
 	
-	print("success")
-	login_done.emit(notion, notion_media_database_id_line_edit.text)
+	print("Database loaded correctly")
+	login_done(notion, response["body"])
 	
+
 
 func write_error(text:String) -> void:
 	error_label.text = text
+
+
+func login_done(notion:NotionController, notion_database:Dictionary) -> void:
+	var recap_scene := RECAP_SCENE.instantiate() as MediaCoverRecap
+	recap_scene.init(notion, notion_database)
+	
+	get_tree().root.add_child(recap_scene)
+	
+	self.queue_free()
+	
