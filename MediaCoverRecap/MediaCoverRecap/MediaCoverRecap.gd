@@ -9,7 +9,7 @@ extends Control
 
 
 var _notion:NotionController
-var _database:Dictionary # TODO: Convert to class
+var _database:NotionDatabase
 
 
 func _ready() -> void:
@@ -19,8 +19,7 @@ func _ready() -> void:
 		add_child(notion)
 		
 		var response := await notion.get_database(LoginScreen.DEFAULT_DATABASE_ID)
-		if response.status != HTTPClient.RESPONSE_OK:
-			push_error(response.message)
+		if response == null:
 			return
 		print("Database loaded correctly")
 		init(notion, response["body"])
@@ -29,10 +28,14 @@ func _ready() -> void:
 	save_covers_button.pressed.connect(_save_images)
 
 
-func init(notion:NotionController, database:Dictionary) -> void:
+func init(notion:NotionController, database:NotionDatabase) -> void:
 	_notion = notion
 	_database = database
+	get_types()
 
+
+func get_types() -> void:
+	var property := _database.get_property_by_id(NotionDatabaseKeys.property_type)
 
 func _load_images(data:Database.Data) -> void:
 	_notion.get_media(_database["id"], NotionBody.create_body(

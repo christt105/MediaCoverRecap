@@ -34,13 +34,12 @@ func on_login_button_pressed() -> void:
 	var notion := NotionController.new(notion_api_secret_line_edit.text)
 	get_tree().root.add_child(notion)
 	
-	var response := await notion.get_database(database_id)
-	if response.status != HTTPClient.RESPONSE_OK:
-		write_error(response.message)
+	var database := await notion.get_database(database_id)
+	if database == null:
 		return
 	
 	print("Database loaded correctly")
-	login_done(notion, response["body"])
+	login_done(notion, database)
 	
 
 
@@ -48,7 +47,7 @@ func write_error(text:String) -> void:
 	error_label.text = text
 
 
-func login_done(notion:NotionController, notion_database:Dictionary) -> void:
+func login_done(notion:NotionController, notion_database:NotionDatabase) -> void:
 	var recap_scene := RECAP_SCENE.instantiate() as MediaCoverRecap
 	recap_scene.init(notion, notion_database)
 	
