@@ -46,7 +46,7 @@ func get_media(database: String, notion_body: String, on_completed: Callable) ->
 		push_error(error_string(error))
 
 
-func check_database(database_id: String) -> Dictionary:
+func get_database(database_id: String) -> NotionDatabase:
 	var http_request := HTTPRequest.new()
 	add_child(http_request)
 	
@@ -58,13 +58,19 @@ func check_database(database_id: String) -> Dictionary:
 		push_error(error_string(error))
 	
 	var request_response = await http_request.request_completed
-	var result = {"status": request_response[1]}
+	var result = request_response[1]
 	
-	if result.status != HTTPClient.RESPONSE_OK:
+	if result != HTTPClient.RESPONSE_OK:
 		request_response = JSON.parse_string(request_response[3].get_string_from_utf8())
-		result["message"] = request_response.message
+		push_error(request_response.message)
+		return null
 	
-	return result
+	var dict:Dictionary = JSON.parse_string(request_response[3].get_string_from_utf8())
+	var database := NotionDatabase.new()
+	database.id = dict["id"]
+	database.properties = dict["properties"]
+	
+	return database
 
 func _on_get_database_completed(result, response_code, headers, body, on_completed: Callable) -> void:
 	var response = JSON.parse_string(body.get_string_from_utf8())
