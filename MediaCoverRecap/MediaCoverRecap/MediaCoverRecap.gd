@@ -78,6 +78,7 @@ func _on_cover_download_request_completed(result, response_code, headers:Array, 
 		push_error("Image from " + media.cover_url + " is empty.")
 		return;
 	
+	# TODO: Image cache
 	# image.save_png("res://Tests/Images/" + media.name + ".png")
 	var texture = ImageTexture.create_from_image(image)
 	

@@ -3,6 +3,9 @@ extends Node
 
 var _token: String = ""
 
+
+
+
 func _init(token: String) -> void:
 	_token = token
 
@@ -11,13 +14,30 @@ func get_headers() -> PackedStringArray:
 	return ["Notion-Version: 2022-06-28", "Authorization: Bearer " + _token, "Content-Type: application/json"]
 
 
+func _get_url_database(database:String) -> String:
+	if OS.has_feature("editor") or !OS.has_feature("web"):
+		return "https://api.notion.com/v1/databases/" + database
+	
+	# Web builds cannot access APIs because the CORS policy
+	# I have created a redirect in a free platform
+	return "https://christt105.npkn.net/get-notion-database/" + database + "/" + _token
+	
+
+func _get_url_query(database:String) -> String:
+	if OS.has_feature("editor") or !OS.has_feature("web"):
+		return "https://api.notion.com/v1/databases/" + database + "/query"
+	
+	# Same as _get_url_query
+	return "https://christt105.npkn.net/notion-query-database/" + database + "/" + _token
+	
+
 func get_media(database: String, notion_body: String, on_completed: Callable) -> void:
 	var http_request := HTTPRequest.new()
 	add_child(http_request)
 	http_request.request_completed.connect(_on_get_database_completed.bind(on_completed))
 	
 	var error := http_request.request(
-		"https://api.notion.com/v1/databases/" + database + "/query",
+		_get_url_query(database),
 		get_headers(),
 		HTTPClient.METHOD_POST,
 		notion_body)
@@ -31,7 +51,7 @@ func check_database(database_id: String) -> Dictionary:
 	add_child(http_request)
 	
 	var error := http_request.request(
-		"https://api.notion.com/v1/databases/" + database_id,
+		_get_url_database(database_id),
 		get_headers())
 	
 	if error != OK:
