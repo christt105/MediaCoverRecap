@@ -18,6 +18,27 @@ func _ready() -> void:
 	if OS.has_feature("editor"):
 		notion_api_secret_line_edit.text = NotionSecretGetter.GetNotionSecret()
 		notion_media_database_id_line_edit.text = DEFAULT_DATABASE_ID
+	else:
+		load_from_user()
+
+
+func load_from_user() -> void:
+	if not FileAccess.file_exists("user://login.save"):
+		return
+	
+	var file := FileAccess.open("user://login.save", FileAccess.READ)
+	var data = JSON.parse_string(file.get_as_text())
+	
+	notion_api_secret_line_edit.text = data["token"]
+	notion_media_database_id_line_edit.text = data["database"]
+
+
+func save_user() -> void:
+	var notion_secret := notion_api_secret_line_edit.text
+	var database := notion_media_database_id_line_edit.text
+	
+	var file := FileAccess.open("user://login.save", FileAccess.WRITE)
+	file.store_line(JSON.stringify({"token": notion_secret, "database": database}))
 
 
 func on_login_button_pressed() -> void:
@@ -39,6 +60,9 @@ func on_login_button_pressed() -> void:
 		return
 	
 	print("Database loaded correctly")
+	
+	save_user()
+	
 	login_done(notion, database)
 	
 

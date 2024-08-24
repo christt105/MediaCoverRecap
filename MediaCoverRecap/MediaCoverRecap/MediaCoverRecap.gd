@@ -54,10 +54,17 @@ func _on_get_media(media:Array[Media]) -> void:
 		var request = HTTPRequest.new()
 		add_child(request)
 		request.request_completed.connect(_on_cover_download_request_completed.bind(m))
-		print("Downloading image from " + m.cover_url)
-		request.request(m.cover_url)
+		print("Downloading image from " + m.cover_url.url)
+		request.request(_get_cover_url(m.cover_url))
 	
 	collage.create_collage(media)
+
+
+func _get_cover_url(cover:Media.Cover) -> String:
+	if cover.is_external:
+		return "https://mediacoverrecapserver.onrender.com/image?url=" + cover.url
+	else:
+		return cover.url
 
 
 func _on_cover_download_request_completed(result, response_code, headers:Array, body, media:Media) -> void:
@@ -67,18 +74,21 @@ func _on_cover_download_request_completed(result, response_code, headers:Array, 
 	var image = Image.new()
 	
 	var error := OK
-	match _get_image_type(headers):
+	var image_type := _get_image_type(headers)
+	match image_type:
 		"jpg", "jpeg":
 			error = image.load_jpg_from_buffer(body)
 		"png":
 			error = image.load_png_from_buffer(body)
+		_:
+			push_warning("No image type for " + image_type)
 	
 	if error != OK:
 		push_error("Couldn't load the image. " + error_string(error))
 		return
 	
 	if image.is_empty():
-		push_error("Image from " + media.cover_url + " is empty.")
+		push_error("Image from " + media.cover_url.url + " is empty.")
 		return;
 	
 	# TODO: Image cache
@@ -90,8 +100,9 @@ func _on_cover_download_request_completed(result, response_code, headers:Array, 
 
 func _get_image_type(headers:Array) -> String:
 	for header in headers:
-		if header.begins_with("Content-Type:"):
-			return header.substr("Content-Type: image/".length())
+		if header.to_lower().begins_with("content-type:"):
+			var pos:int = header.to_lower().find("image/")
+			return header.substr(pos + "image/".length()).to_lower()
 	
 	return ""
 

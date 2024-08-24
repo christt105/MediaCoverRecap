@@ -97,11 +97,11 @@ func get_property_by_id(media:Dictionary, id:String) -> Dictionary:
 	return {}
 
 
-func get_file_url(file: Dictionary) -> String:
+func get_file_url(file: Dictionary) -> Media.Cover:
 	if file["type"] == "external":
-		return file["external"]["url"]
+		return Media.Cover.new(true, file["external"]["url"])
 	else:
-		return file["file"]["url"]
+		return Media.Cover.new(false, file["file"]["url"])
 
 
 func get_properties(properties: Array) -> Array[String]:

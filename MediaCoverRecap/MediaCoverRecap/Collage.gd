@@ -42,6 +42,8 @@ func create_collage(media:Array[Media]) -> void:
 		grid_container.add_child(texture_rect)
 		m.cover_updated.connect(_cover_updated.bind(texture_rect))
 		set_cover(texture_rect, m)
+	
+	reset_grid_container_size()
 
 
 func sort(order:Configuration.Order) -> void:
