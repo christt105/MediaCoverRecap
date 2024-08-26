@@ -17,3 +17,22 @@ static func completed_on_year(year: int) -> Dictionary:
 			}
 		]
 	}
+
+
+static func from_to_date(from:Dictionary, to:Dictionary) -> Dictionary:
+	return {
+		"and": [
+			{
+				"property": NotionDatabaseKeys.property_completed,
+				"date": {
+					"on_or_after": "%04d-%02d-%02d" % [from["year"], from["month"], from["day"]]
+				}
+			},
+			{
+				"property": NotionDatabaseKeys.property_completed,
+				"date": {
+					"on_or_before": "%04d-%02d-%02d" % [to["year"], to["month"], to["day"]]
+				}
+			}
+		]
+	}

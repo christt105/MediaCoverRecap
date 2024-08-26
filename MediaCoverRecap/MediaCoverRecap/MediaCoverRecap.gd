@@ -23,7 +23,7 @@ func _ready() -> void:
 		if response == null:
 			return
 		print("Database loaded correctly")
-		init(notion, response["body"])
+		init(notion, response)
 	
 	database_configuration.load.connect(_load_images)
 	save_covers_button.pressed.connect(_save_images)
@@ -51,7 +51,7 @@ func _load_images(data:Database.Data) -> void:
 	_notion.get_media(_database["id"], NotionBody.create_body(
 		{
 			"and": [
-			NotionFilters.completed_on_year(data.year)
+			NotionFilters.from_to_date(data.from, data.to)
 			]
 		}, NotionSorts.get_sort(NotionDatabaseKeys.property_completed, NotionSorts.SortDirection.ASCENDING)
 		), _on_get_media)
