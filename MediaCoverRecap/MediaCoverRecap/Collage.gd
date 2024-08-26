@@ -14,6 +14,19 @@ signal resized(new_size:Vector2i)
 			reset_grid_container_size()
 
 
+var h_separation:int:
+	get:
+		return grid_container.get_theme_constant_override("h_separation")
+	set(value):
+		grid_container.add_theme_constant_override("h_separation", value)
+
+var v_separation:int:
+	get:
+		return grid_container.get_theme_constant_override("v_separation")
+	set(value):
+		grid_container.add_theme_constant_override("v_separation", value)
+
+
 var media_type_filter:Dictionary = {}
 
 

@@ -3,18 +3,21 @@ extends Control
 
 @export var collage:Collage
 
+@export var filters_container:GridContainer
 @export var columns:SpinBox
+@export var h_separation:SpinBox
+@export var v_separation:SpinBox
 @export var sort:OptionButton
 @export var image_size_info:Label
-@export var filters_container:GridContainer
 
 enum Order {OLDER, NEWER}
-
 
 func _ready() -> void:
 	collage.resized.connect(_on_collage_resized)
 	columns.value_changed.connect(_on_columns_changed)
 	sort.item_selected.connect(_on_sort_changed)
+	h_separation.value_changed.connect(_on_horizontal_separation_changed)
+	v_separation.value_changed.connect(_on_vertical_separation_changed)
 
 
 func set_media_types(media_types:Array[MediaType]) -> void:
@@ -31,6 +34,14 @@ func set_media_types(media_types:Array[MediaType]) -> void:
 
 func _on_collage_resized(size:Vector2i) -> void:
 	image_size_info.text = "Image size: %dpx x %dpx" % [size.x, size.y]
+
+
+func _on_horizontal_separation_changed(value:float) -> void:
+	collage.h_separation = int(value)
+
+
+func _on_vertical_separation_changed(value:float) -> void:
+	collage.v_separation = int(value)
 
 
 func _on_columns_changed(value:float) -> void:

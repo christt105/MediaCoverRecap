@@ -64,6 +64,7 @@ size_flags_horizontal = 3
 [node name="Database" type="Panel" parent="HBoxContainer/MarginContainer2/VBoxContainer" node_paths=PackedStringArray("year", "load_button")]
 layout_mode = 2
 size_flags_vertical = 3
+size_flags_stretch_ratio = 0.5
 script = ExtResource("2_y6cdp")
 year = NodePath("DatabaseSection/MarginContainer/VBoxContainer/Year/LineEdit")
 load_button = NodePath("DatabaseSection/MarginContainer/VBoxContainer/LoadImagesButton")
@@ -130,15 +131,17 @@ size_flags_horizontal = 4
 size_flags_vertical = 10
 text = "Load Images"
 
-[node name="Configuration" type="Panel" parent="HBoxContainer/MarginContainer2/VBoxContainer" node_paths=PackedStringArray("collage", "columns", "sort", "image_size_info", "filters_container")]
+[node name="Configuration" type="Panel" parent="HBoxContainer/MarginContainer2/VBoxContainer" node_paths=PackedStringArray("collage", "filters_container", "columns", "h_separation", "v_separation", "sort", "image_size_info")]
 layout_mode = 2
 size_flags_vertical = 3
 script = ExtResource("3_qhacw")
 collage = NodePath("../../../../Collage")
+filters_container = NodePath("DatabaseSection/VBoxContainer/Filters")
 columns = NodePath("DatabaseSection/VBoxContainer/Columns")
+h_separation = NodePath("DatabaseSection/VBoxContainer/HorizontalSeparation/HBoxContainer/SpinBox")
+v_separation = NodePath("DatabaseSection/VBoxContainer/VerticalSeparation/HBoxContainer/SpinBox")
 sort = NodePath("DatabaseSection/VBoxContainer/MarginContainer/HBoxContainer/OrderOptionButton")
 image_size_info = NodePath("DatabaseSection/VBoxContainer/ImageSizeLabel")
-filters_container = NodePath("DatabaseSection/VBoxContainer/Filters")
 
 [node name="DatabaseSection" type="VBoxContainer" parent="HBoxContainer/MarginContainer2/VBoxContainer/Configuration"]
 layout_mode = 1
@@ -180,34 +183,52 @@ layout_mode = 2
 size_flags_vertical = 0
 columns = 3
 
-[node name="FilmCheckBox" type="CheckBox" parent="HBoxContainer/MarginContainer2/VBoxContainer/Configuration/DatabaseSection/VBoxContainer/Filters"]
-layout_mode = 2
-size_flags_horizontal = 3
-button_pressed = true
-text = "Film"
-
-[node name="SerieCheckBox" type="CheckBox" parent="HBoxContainer/MarginContainer2/VBoxContainer/Configuration/DatabaseSection/VBoxContainer/Filters"]
-layout_mode = 2
-size_flags_horizontal = 3
-button_pressed = true
-text = "Serie"
-
-[node name="VideogameCheckBox" type="CheckBox" parent="HBoxContainer/MarginContainer2/VBoxContainer/Configuration/DatabaseSection/VBoxContainer/Filters"]
-layout_mode = 2
-size_flags_horizontal = 3
-button_pressed = true
-text = "Videogame"
-
 [node name="Columns" type="SpinBox" parent="HBoxContainer/MarginContainer2/VBoxContainer/Configuration/DatabaseSection/VBoxContainer"]
 custom_minimum_size = Vector2(154.38, 0)
 layout_mode = 2
-size_flags_horizontal = 4
+size_flags_horizontal = 8
 size_flags_vertical = 0
 min_value = 1.0
 value = 6.0
 rounded = true
 allow_greater = true
 suffix = "Columns"
+
+[node name="HorizontalSeparation" type="MarginContainer" parent="HBoxContainer/MarginContainer2/VBoxContainer/Configuration/DatabaseSection/VBoxContainer"]
+visible = false
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_right = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/MarginContainer2/VBoxContainer/Configuration/DatabaseSection/VBoxContainer/HorizontalSeparation"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer/MarginContainer2/VBoxContainer/Configuration/DatabaseSection/VBoxContainer/HorizontalSeparation/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Horizontal Separation"
+
+[node name="SpinBox" type="SpinBox" parent="HBoxContainer/MarginContainer2/VBoxContainer/Configuration/DatabaseSection/VBoxContainer/HorizontalSeparation/HBoxContainer"]
+layout_mode = 2
+allow_greater = true
+
+[node name="VerticalSeparation" type="MarginContainer" parent="HBoxContainer/MarginContainer2/VBoxContainer/Configuration/DatabaseSection/VBoxContainer"]
+visible = false
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_right = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/MarginContainer2/VBoxContainer/Configuration/DatabaseSection/VBoxContainer/VerticalSeparation"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer/MarginContainer2/VBoxContainer/Configuration/DatabaseSection/VBoxContainer/VerticalSeparation/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Vertical Separation"
+
+[node name="SpinBox" type="SpinBox" parent="HBoxContainer/MarginContainer2/VBoxContainer/Configuration/DatabaseSection/VBoxContainer/VerticalSeparation/HBoxContainer"]
+layout_mode = 2
+allow_greater = true
 
 [node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/MarginContainer2/VBoxContainer/Configuration/DatabaseSection/VBoxContainer"]
 layout_mode = 2
