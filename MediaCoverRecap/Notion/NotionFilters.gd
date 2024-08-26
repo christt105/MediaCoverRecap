@@ -1,26 +1,5 @@
 class_name NotionFilters
 
-static var ONLY_SERIES := {
-			"property": NotionDatabaseKeys.property_type,
-			"select": {
-				"equals": "Serie"
-			}
-		}
-
-static var ONLY_VIDEOGAMES := {
-			"property": NotionDatabaseKeys.property_type,
-			"select": {
-				"equals": NotionDatabaseKeys.type_videogame
-			}
-		}
-
-static var ONLY_FILMS := {
-			"property": NotionDatabaseKeys.property_type,
-			"select": {
-				"equals": NotionDatabaseKeys.type_film
-			}
-		}
-
 static func completed_on_year(year: int) -> Dictionary:
 	return {
 		"and": [

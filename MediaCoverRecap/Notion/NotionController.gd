@@ -82,7 +82,7 @@ func _on_get_database_completed(result, response_code, headers, body, on_complet
 			get_property_by_id(media, NotionDatabaseKeys.property_name)["title"][0]["plain_text"],
 			get_file_url(get_property_by_id(media, NotionDatabaseKeys.property_cover)["files"][0]),
 			get_property_by_id(media, NotionDatabaseKeys.property_completed)["date"]["start"],
-			get_property_by_id(media, NotionDatabaseKeys.property_type)["select"]["name"],
+			get_property_by_id(media, NotionDatabaseKeys.property_type)["select"]["id"],
 			get_properties(get_property_by_id(media, NotionDatabaseKeys.property_properties)["multi_select"])
 			))
 	
