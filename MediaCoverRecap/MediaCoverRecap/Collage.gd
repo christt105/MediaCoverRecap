@@ -14,11 +14,7 @@ signal resized(new_size:Vector2i)
 			reset_grid_container_size()
 
 
-var media_type_filter:Dictionary = {
-	NotionDatabaseKeys.type_film: true,
-	NotionDatabaseKeys.type_serie: true,
-	NotionDatabaseKeys.type_videogame: true,
-}
+var media_type_filter:Dictionary = {}
 
 
 func _ready() -> void:
@@ -28,6 +24,12 @@ func _ready() -> void:
 func clear() -> void:
 	for child in grid_container.get_children():
 		child.queue_free()
+
+
+func set_media_types(media_types:Array[MediaType]) -> void:
+	media_type_filter = {}
+	for media_type in media_types:
+		media_type_filter[media_type.id] = true
 
 
 func set_media_type_filter(key:String, toggled_on:bool) -> void:

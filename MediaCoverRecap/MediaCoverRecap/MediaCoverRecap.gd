@@ -5,6 +5,7 @@ extends Control
 @export var collage_display:TextureRect
 @export var collage:Collage
 @export var database_configuration:Database
+@export var display_configuration:Configuration
 @export var save_covers_button:Button
 
 
@@ -31,11 +32,20 @@ func _ready() -> void:
 func init(notion:NotionController, database:NotionDatabase) -> void:
 	_notion = notion
 	_database = database
-	get_types()
+	set_types()
 
 
-func get_types() -> void:
-	var property := _database.get_property_by_id(NotionDatabaseKeys.property_type)
+func set_types() -> void:
+	var property_type := _database.get_property_by_id(NotionDatabaseKeys.property_type)
+	
+	var media_types:Array[MediaType] = []
+	for option in property_type["select"]["options"]:
+		var media_type := MediaType.new(option.id, option.name)
+		media_types.push_back(media_type)
+	
+	collage.set_media_types(media_types)
+	display_configuration.set_media_types(media_types)
+	
 
 func _load_images(data:Database.Data) -> void:
 	_notion.get_media(_database["id"], NotionBody.create_body(
@@ -54,14 +64,15 @@ func _on_get_media(media:Array[Media]) -> void:
 		var request = HTTPRequest.new()
 		add_child(request)
 		request.request_completed.connect(_on_cover_download_request_completed.bind(m))
-		print("Downloading image from " + m.cover_url.url)
-		request.request(_get_cover_url(m.cover_url))
+		print("Downloading image " + m.cover_url.url)
+		var url := _get_cover_url(m.cover_url)
+		request.request(url)
 	
 	collage.create_collage(media)
 
 
 func _get_cover_url(cover:Media.Cover) -> String:
-	if cover.is_external:
+	if !OS.has_feature("editor") and OS.has_feature("web") and cover.is_external:
 		return "https://mediacoverrecapserver.onrender.com/image?url=" + cover.url
 	else:
 		return cover.url

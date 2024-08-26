@@ -1,16 +1,12 @@
 class_name Configuration
 extends Control
 
-
 @export var collage:Collage
-
-@export var film:CheckBox
-@export var serie:CheckBox
-@export var videogame:CheckBox
 
 @export var columns:SpinBox
 @export var sort:OptionButton
 @export var image_size_info:Label
+@export var filters_container:GridContainer
 
 enum Order {OLDER, NEWER}
 
@@ -19,11 +15,18 @@ func _ready() -> void:
 	collage.resized.connect(_on_collage_resized)
 	columns.value_changed.connect(_on_columns_changed)
 	sort.item_selected.connect(_on_sort_changed)
+
+
+func set_media_types(media_types:Array[MediaType]) -> void:
+	for child in filters_container.get_children():
+		child.queue_free()
 	
-	# TODO: Do it automatically getting the data from the database fields
-	film.toggled.connect(_on_filter_type_toggled.bind(NotionDatabaseKeys.type_film))
-	serie.toggled.connect(_on_filter_type_toggled.bind(NotionDatabaseKeys.type_serie))
-	videogame.toggled.connect(_on_filter_type_toggled.bind(NotionDatabaseKeys.type_videogame))
+	for media_type in media_types:
+		var checkbox := CheckBox.new()
+		checkbox.button_pressed = true
+		filters_container.add_child(checkbox)
+		checkbox.text = media_type.name
+		checkbox.toggled.connect(_on_filter_type_toggled.bind(media_type.id))
 
 
 func _on_collage_resized(size:Vector2i) -> void:
