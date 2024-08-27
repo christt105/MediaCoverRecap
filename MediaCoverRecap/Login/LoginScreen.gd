@@ -10,10 +10,12 @@ const RECAP_SCENE:PackedScene = preload("res://MediaCoverRecap/MediaCoverRecap.t
 @export var notion_media_database_id_line_edit:LineEdit
 @export var error_label:Label
 @export var login_button:Button
+@onready var login_sample_button: Button = $VBoxContainer/LoginSampleButton
 
 
 func _ready() -> void:
 	login_button.pressed.connect(on_login_button_pressed)
+	login_sample_button.pressed.connect(on_login_sample_button_pressed)
 	
 	if OS.has_feature("editor"):
 		notion_api_secret_line_edit.text = NotionSecretGetter.GetNotionSecret()
@@ -67,7 +69,22 @@ func on_login_button_pressed() -> void:
 	
 
 
+func on_login_sample_button_pressed() -> void:
+	var request := HTTPRequest.new()
+	var result := request.request("https://christt105.npkn.net/get-my-notion-dat-abase/")
+	
+	if result != OK:
+		write_error(error_string(result))
+		return
+	
+	var request_result = await request.request_completed
+	
+	print("Database loaded correctly")
+	
+	#login_done(notion, database)
+
 func write_error(text:String) -> void:
+	push_error(text)
 	error_label.text = text
 
 
