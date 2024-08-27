@@ -151,7 +151,7 @@ size_flags_vertical = 3
 script = ExtResource("3_qhacw")
 collage = NodePath("../../../../Collage")
 filters_container = NodePath("DatabaseSection/VBoxContainer/Filters")
-columns = NodePath("DatabaseSection/VBoxContainer/Columns")
+columns = NodePath("DatabaseSection/VBoxContainer/HorizontalSeparation2/HBoxContainer/Columns")
 h_separation = NodePath("DatabaseSection/VBoxContainer/HorizontalSeparation/HBoxContainer/SpinBox")
 v_separation = NodePath("DatabaseSection/VBoxContainer/VerticalSeparation/HBoxContainer/SpinBox")
 sort = NodePath("DatabaseSection/VBoxContainer/MarginContainer/HBoxContainer/OrderOptionButton")
@@ -197,8 +197,20 @@ layout_mode = 2
 size_flags_vertical = 0
 columns = 3
 
-[node name="Columns" type="SpinBox" parent="HBoxContainer/MarginContainer2/VBoxContainer/Configuration/DatabaseSection/VBoxContainer"]
-custom_minimum_size = Vector2(154.38, 0)
+[node name="HorizontalSeparation2" type="MarginContainer" parent="HBoxContainer/MarginContainer2/VBoxContainer/Configuration/DatabaseSection/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_right = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/MarginContainer2/VBoxContainer/Configuration/DatabaseSection/VBoxContainer/HorizontalSeparation2"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer/MarginContainer2/VBoxContainer/Configuration/DatabaseSection/VBoxContainer/HorizontalSeparation2/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Columns"
+
+[node name="Columns" type="SpinBox" parent="HBoxContainer/MarginContainer2/VBoxContainer/Configuration/DatabaseSection/VBoxContainer/HorizontalSeparation2/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 0
@@ -206,7 +218,6 @@ min_value = 1.0
 value = 6.0
 rounded = true
 allow_greater = true
-suffix = "Columns"
 
 [node name="HorizontalSeparation" type="MarginContainer" parent="HBoxContainer/MarginContainer2/VBoxContainer/Configuration/DatabaseSection/VBoxContainer"]
 visible = false
