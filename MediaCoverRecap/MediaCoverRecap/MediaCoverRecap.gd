@@ -7,10 +7,14 @@ extends Control
 @export var database_configuration:Database
 @export var display_configuration:Configuration
 @export var save_covers_button:Button
+@export var display_text:Label
 
 
 var _notion:NotionController
 var _database:NotionDatabase
+
+var downloaded_covers:int
+var total_covers:int
 
 
 func _ready() -> void:
@@ -24,6 +28,10 @@ func _ready() -> void:
 			return
 		print("Database loaded correctly")
 		init(notion, response)
+	
+	display_text.text = ""
+	downloaded_covers = 0
+	total_covers = 0
 	
 	database_configuration.load.connect(_load_images)
 	save_covers_button.pressed.connect(_save_images)
@@ -60,6 +68,10 @@ func _load_images(data:Database.Data) -> void:
 func _on_get_media(media:Array[Media]) -> void:
 	collage.clear()
 	
+	_set_info_text("Downloading 0/%d covers..." % media.size())
+	downloaded_covers = 0
+	total_covers = media.size()
+	
 	for m in media:
 		var request = HTTPRequest.new()
 		add_child(request)
@@ -69,6 +81,10 @@ func _on_get_media(media:Array[Media]) -> void:
 		request.request(url)
 	
 	collage.create_collage(media)
+
+
+func _set_info_text(text:String) -> void:
+	display_text.text = text
 
 
 func _get_cover_url(cover:Media.Cover) -> String:
@@ -105,8 +121,10 @@ func _on_cover_download_request_completed(result, response_code, headers:Array, 
 	# TODO: Image cache
 	# image.save_png("res://Tests/Images/" + media.name + ".png")
 	var texture = ImageTexture.create_from_image(image)
-	
 	media.cover = texture
+	
+	downloaded_covers += 1
+	_set_info_text("Downloading %d/%d covers..." % [downloaded_covers, total_covers])
 
 
 func _get_image_type(headers:Array) -> String:

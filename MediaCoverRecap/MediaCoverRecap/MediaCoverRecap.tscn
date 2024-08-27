@@ -11,7 +11,7 @@ viewport_path = NodePath("Collage")
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uwa5c"]
 bg_color = Color(0.118581, 0.118581, 0.118581, 1)
 
-[node name="MediaCoverRecap" type="Control" node_paths=PackedStringArray("collage_display", "collage", "database_configuration", "display_configuration", "save_covers_button")]
+[node name="MediaCoverRecap" type="Control" node_paths=PackedStringArray("collage_display", "collage", "database_configuration", "display_configuration", "save_covers_button", "display_text")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -24,6 +24,7 @@ collage = NodePath("Collage")
 database_configuration = NodePath("HBoxContainer/MarginContainer2/VBoxContainer/Database")
 display_configuration = NodePath("HBoxContainer/MarginContainer2/VBoxContainer/Configuration")
 save_covers_button = NodePath("HBoxContainer/MarginContainer2/VBoxContainer/SaveImageButton")
+display_text = NodePath("HBoxContainer/MarginContainer2/VBoxContainer/Database/DatabaseSection/MarginContainer/VBoxContainer/DisplayText")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 1
@@ -138,6 +139,12 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 6
 placeholder_text = "yyyy/mm/dd"
+
+[node name="DisplayText" type="Label" parent="HBoxContainer/MarginContainer2/VBoxContainer/Database/DatabaseSection/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="LoadImagesButton" type="Button" parent="HBoxContainer/MarginContainer2/VBoxContainer/Database/DatabaseSection/MarginContainer/VBoxContainer"]
 layout_mode = 2
