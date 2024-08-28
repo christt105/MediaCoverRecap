@@ -9,6 +9,7 @@ const RECAP_SCENE:PackedScene = preload("res://MediaCoverRecap/MediaCoverRecap.t
 @export var notion_api_secret_line_edit:LineEdit
 @export var notion_media_database_id_line_edit:LineEdit
 @export var error_label:Label
+@export var info_label:Label
 @export var login_button:Button
 @onready var login_sample_button: Button = $VBoxContainer/LoginSampleButton
 
@@ -57,6 +58,10 @@ func on_login_button_pressed() -> void:
 	var notion := NotionController.new(notion_api_secret_line_edit.text)
 	get_tree().root.add_child(notion)
 	
+	write_info("Logging in...")
+	
+	await get_tree().process_frame
+	
 	var database := await notion.get_database(database_id)
 	if database == null:
 		return
@@ -85,7 +90,13 @@ func on_login_sample_button_pressed() -> void:
 
 func write_error(text:String) -> void:
 	push_error(text)
+	info_label.text = ""
 	error_label.text = text
+
+
+func write_info(text:String) -> void:
+	error_label.text = ""
+	info_label.text = text
 
 
 func login_done(notion:NotionController, notion_database:NotionDatabase) -> void:

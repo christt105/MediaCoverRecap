@@ -15,6 +15,7 @@ var _database:NotionDatabase
 
 var downloaded_covers:int
 var total_covers:int
+var loading_images:bool = false
 
 
 func _ready() -> void:
@@ -56,6 +57,14 @@ func set_types() -> void:
 	
 
 func _load_images(data:Database.Data) -> void:
+	if loading_images:
+		return
+	
+	loading_images = true
+	_set_info_text("Downloading Media...")
+	
+	await get_tree().process_frame
+	
 	_notion.get_media(_database["id"], NotionBody.create_body(
 		{
 			"and": [
@@ -128,6 +137,11 @@ func _on_cover_download_request_completed(result, response_code, headers:Array, 
 	
 	downloaded_covers += 1
 	_set_info_text("Downloading %d/%d covers..." % [downloaded_covers, total_covers])
+	
+	if total_covers == downloaded_covers:
+		loading_images = false
+		_set_info_text("")
+		
 
 
 func _save_image(image:Image, media_name:String) -> void:

@@ -1,5 +1,9 @@
 extends Node
 
+# Web Exports have problems with Paste from Clipboard
+# This is a workaround from https://github.com/godotengine/godot/issues/83752
+# Other related issues https://github.com/godotengine/godot/issues/81252 and https://github.com/Praytic/youtd2/issues/418
+
 func _ready() -> void:
 	JavaScriptBridge.eval('
 window.getclip = async function () {
@@ -14,7 +18,7 @@ window.getclip = async function () {
 	window.imgtext = clipboardContent;
   } catch (error) {
 	console.error(error.message);
-	window.imgtext = "invalidimage";
+	window.imgtext = "";
   }
 };
 ')
