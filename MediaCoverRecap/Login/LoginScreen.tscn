@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://b0gaf2pjnhtxk"]
+[gd_scene load_steps=3 format=3 uid="uid://b0gaf2pjnhtxk"]
 
 [ext_resource type="Script" path="res://Login/LoginScreen.gd" id="1_dhoeq"]
+[ext_resource type="Script" path="res://Login/FixPasteWeb.gd" id="2_kynpw"]
 
 [node name="LoginScreen" type="Control" node_paths=PackedStringArray("notion_api_secret_line_edit", "notion_media_database_id_line_edit", "error_label", "login_button")]
 layout_mode = 3
@@ -69,3 +70,6 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 6
 text = "Demo"
+
+[node name="FixPasteWeb" type="Node" parent="."]
+script = ExtResource("2_kynpw")
