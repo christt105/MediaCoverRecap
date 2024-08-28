@@ -118,13 +118,22 @@ func _on_cover_download_request_completed(result, response_code, headers:Array, 
 		push_error("Image from " + media.cover_url.url + " is empty.")
 		return;
 	
+	if image.get_size().y != 1000:
+		image.resize(1000 * image.get_size().x / image.get_size().y, 1000)
+	
 	# TODO: Image cache
-	# image.save_png("res://Tests/Images/" + media.name + ".png")
+	_save_image(image, media.name)
 	var texture = ImageTexture.create_from_image(image)
 	media.cover = texture
 	
 	downloaded_covers += 1
 	_set_info_text("Downloading %d/%d covers..." % [downloaded_covers, total_covers])
+
+
+func _save_image(image:Image, media_name:String) -> void:
+	const DIRECTORY := "res://Tests/Images/"
+	DirAccess.make_dir_absolute(DIRECTORY)
+	image.save_png(DIRECTORY + media_name + ".png")
 
 
 func _get_image_type(headers:Array) -> String:
@@ -140,7 +149,7 @@ func _save_images() -> void:
 	if OS.has_feature("web"):
 		var buffer := collage.get_texture().get_image().save_png_to_buffer()
 		JavaScriptBridge.download_buffer(buffer, "Cover.png")
-	else:
+	elif OS.has_feature("editor"):
 		var time := Time.get_datetime_dict_from_system()
 		var dir_path := "res://Tests/Results/"
 		var path:String = dir_path + "%02d%02d%02d_%02d%02d%02d.png" % [time["year"], time["month"], time["day"], time["hour"], time["minute"], time["second"]]

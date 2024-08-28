@@ -53,6 +53,7 @@ func set_media_type_filter(key:String, toggled_on:bool) -> void:
 func create_collage(media:Array[Media]) -> void:
 	for m in media:
 		var texture_rect = TextureRect.new()
+		texture_rect.expand_mode = TextureRect.EXPAND_KEEP_SIZE
 		texture_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
 		grid_container.add_child(texture_rect)
 		m.cover_updated.connect(_cover_updated.bind(texture_rect))
