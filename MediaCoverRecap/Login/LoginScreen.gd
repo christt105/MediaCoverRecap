@@ -75,18 +75,20 @@ func on_login_button_pressed() -> void:
 
 
 func on_login_sample_button_pressed() -> void:
-	var request := HTTPRequest.new()
-	var result := request.request("https://christt105.npkn.net/get-my-notion-dat-abase/")
+	var notion := MyNotionController.new()
+	get_tree().root.add_child(notion)
 	
-	if result != OK:
-		write_error(error_string(result))
+	write_info("Logging in Demo user...")
+	
+	await get_tree().process_frame
+	
+	var database := await notion.get_database("")
+	if database == null:
 		return
-	
-	var request_result = await request.request_completed
 	
 	print("Database loaded correctly")
 	
-	#login_done(notion, database)
+	login_done(notion, database)
 
 func write_error(text:String) -> void:
 	push_error(text)

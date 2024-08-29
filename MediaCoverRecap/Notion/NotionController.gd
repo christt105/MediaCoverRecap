@@ -3,9 +3,6 @@ extends Node
 
 var _token: String = ""
 
-
-
-
 func _init(token: String) -> void:
 	_token = token
 
