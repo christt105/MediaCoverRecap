@@ -295,6 +295,7 @@ size_flags_horizontal = 4
 text = "Save Image"
 
 [node name="Collage" type="SubViewport" parent="." node_paths=PackedStringArray("grid_container")]
+transparent_bg = true
 size = Vector2i(4100, 6924)
 script = ExtResource("2_n80fv")
 grid_container = NodePath("GridContainer")
