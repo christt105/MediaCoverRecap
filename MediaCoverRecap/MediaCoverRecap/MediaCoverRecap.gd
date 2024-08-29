@@ -131,7 +131,8 @@ func _on_cover_download_request_completed(result, response_code, headers:Array, 
 		image.resize(1000 * image.get_size().x / image.get_size().y, 1000)
 	
 	# TODO: Image cache
-	_save_image(image, media.name)
+	if OS.has_feature("editor"):
+		_save_image(image, media.name)
 	var texture = ImageTexture.create_from_image(image)
 	media.cover = texture
 	
