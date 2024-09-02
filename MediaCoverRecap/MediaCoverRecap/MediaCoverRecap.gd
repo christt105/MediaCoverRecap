@@ -98,7 +98,7 @@ func _set_info_text(text:String) -> void:
 
 func _get_cover_url(cover:Media.Cover) -> String:
 	if !OS.has_feature("editor") and OS.has_feature("web") and cover.is_external:
-		return "mediacoverrecapserver-production.up.railway.app/image?url=" + cover.url
+		return "https://mediacoverrecapserver-production.up.railway.app/image?url=" + cover.url
 	else:
 		return cover.url
 
