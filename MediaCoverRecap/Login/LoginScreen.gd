@@ -11,7 +11,7 @@ const RECAP_SCENE:PackedScene = preload("res://MediaCoverRecap/MediaCoverRecap.t
 @export var error_label:Label
 @export var info_label:Label
 @export var login_button:Button
-@onready var login_sample_button: Button = $VBoxContainer/LoginSampleButton
+@export var login_sample_button: Button
 
 
 func _ready() -> void:

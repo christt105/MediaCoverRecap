@@ -84,7 +84,7 @@ func _on_get_media(media:Array[Media]) -> void:
 	for m in media:
 		var request = HTTPRequest.new()
 		add_child(request)
-		request.request_completed.connect(_on_cover_download_request_completed.bind(m))
+		request.request_completed.connect(_on_cover_download_request_completed.bind(m, request))
 		print("Downloading image " + m.cover_url.url)
 		var url := _get_cover_url(m.cover_url)
 		request.request(url)
@@ -103,9 +103,11 @@ func _get_cover_url(cover:Media.Cover) -> String:
 		return cover.url
 
 
-func _on_cover_download_request_completed(result, response_code, headers:Array, body, media:Media) -> void:
+func _on_cover_download_request_completed(result, response_code, headers:Array, body, media:Media, request) -> void:
 	if result != HTTPRequest.RESULT_SUCCESS:
 		push_error("Image couldn't be downloaded. Try a different image.")
+	
+	request.queue_free()
 
 	var image = Image.new()
 	

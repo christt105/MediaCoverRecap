@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://Login/LoginScreen.gd" id="1_dhoeq"]
 [ext_resource type="Script" path="res://Login/FixPasteWeb.gd" id="2_kynpw"]
 
-[node name="LoginScreen" type="Control" node_paths=PackedStringArray("notion_api_secret_line_edit", "notion_media_database_id_line_edit", "error_label", "info_label", "login_button")]
+[node name="LoginScreen" type="Control" node_paths=PackedStringArray("notion_api_secret_line_edit", "notion_media_database_id_line_edit", "error_label", "info_label", "login_button", "login_sample_button")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -11,46 +11,51 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_dhoeq")
-notion_api_secret_line_edit = NodePath("VBoxContainer/NotionApiSecretLineEdit")
-notion_media_database_id_line_edit = NodePath("VBoxContainer/NotionMediaDatabaseLineEdit")
-error_label = NodePath("VBoxContainer/ErrorLabel")
-info_label = NodePath("VBoxContainer/InfoLabel")
-login_button = NodePath("VBoxContainer/LoginButton")
+notion_api_secret_line_edit = NodePath("VBoxContainer2/MarginContainer/VBoxContainer/NotionApiSecretLineEdit")
+notion_media_database_id_line_edit = NodePath("VBoxContainer2/MarginContainer/VBoxContainer/NotionMediaDatabaseLineEdit")
+error_label = NodePath("VBoxContainer2/MarginContainer/VBoxContainer/ErrorLabel")
+info_label = NodePath("VBoxContainer2/MarginContainer/VBoxContainer/InfoLabel")
+login_button = NodePath("VBoxContainer2/MarginContainer/VBoxContainer/LoginButton")
+login_sample_button = NodePath("VBoxContainer2/MarginContainer/VBoxContainer/LoginSampleButton")
 
-[node name="TitleLabel" type="Label" parent="."]
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_bottom = 46.0
-grow_horizontal = 2
-theme_override_font_sizes/font_size = 33
-text = "Media Cover Recap"
-horizontal_alignment = 1
+[node name="FixPasteWeb" type="Node" parent="."]
+script = ExtResource("2_kynpw")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="VBoxContainer2" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 164.0
-offset_top = 75.0
-offset_right = -164.0
-offset_bottom = -51.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/separation = 50
+
+[node name="TitleLabel" type="Label" parent="VBoxContainer2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 33
+text = "Media Cover Recap"
+horizontal_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer2"]
+layout_mode = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_right = 50
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer2/MarginContainer"]
+layout_mode = 2
 theme_override_constants/separation = 15
 
-[node name="NotionApiSecretLineEdit" type="LineEdit" parent="VBoxContainer"]
+[node name="NotionApiSecretLineEdit" type="LineEdit" parent="VBoxContainer2/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 6
 placeholder_text = "Notion Api Integration Secret"
 
-[node name="NotionMediaDatabaseLineEdit" type="LineEdit" parent="VBoxContainer"]
+[node name="NotionMediaDatabaseLineEdit" type="LineEdit" parent="VBoxContainer2/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 6
 placeholder_text = "Notion Media Database Id"
 
-[node name="ErrorLabel" type="Label" parent="VBoxContainer"]
+[node name="ErrorLabel" type="Label" parent="VBoxContainer2/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 125)
 layout_mode = 2
 size_flags_vertical = 6
@@ -58,26 +63,23 @@ theme_override_colors/font_color = Color(1, 0, 0, 1)
 horizontal_alignment = 1
 autowrap_mode = 3
 
-[node name="InfoLabel" type="Label" parent="VBoxContainer"]
+[node name="InfoLabel" type="Label" parent="VBoxContainer2/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 125)
 layout_mode = 2
 size_flags_vertical = 6
 horizontal_alignment = 1
 autowrap_mode = 3
 
-[node name="LoginButton" type="Button" parent="VBoxContainer"]
+[node name="LoginButton" type="Button" parent="VBoxContainer2/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(150, 50)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 6
 text = "Login"
 
-[node name="LoginSampleButton" type="Button" parent="VBoxContainer"]
+[node name="LoginSampleButton" type="Button" parent="VBoxContainer2/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(150, 50)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 6
 text = "Demo"
-
-[node name="FixPasteWeb" type="Node" parent="."]
-script = ExtResource("2_kynpw")

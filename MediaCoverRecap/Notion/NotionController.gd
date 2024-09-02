@@ -31,7 +31,7 @@ func _get_url_query(database:String) -> String:
 func get_media(database: String, notion_body: String, on_completed: Callable) -> void:
 	var http_request := HTTPRequest.new()
 	add_child(http_request)
-	http_request.request_completed.connect(_on_get_database_completed.bind(on_completed))
+	http_request.request_completed.connect(_on_get_database_completed.bind(on_completed, http_request))
 	
 	var error := http_request.request(
 		_get_url_query(database),
@@ -60,6 +60,7 @@ func get_database(database_id: String) -> NotionDatabase:
 	if result != HTTPClient.RESPONSE_OK:
 		request_response = JSON.parse_string(request_response[3].get_string_from_utf8())
 		push_error(request_response.message)
+		http_request.queue_free()
 		return null
 	
 	var dict:Dictionary = JSON.parse_string(request_response[3].get_string_from_utf8())
@@ -67,9 +68,11 @@ func get_database(database_id: String) -> NotionDatabase:
 	database.id = dict["id"]
 	database.properties = dict["properties"]
 	
+	http_request.queue_free()
+	
 	return database
 
-func _on_get_database_completed(result, response_code, headers, body, on_completed: Callable) -> void:
+func _on_get_database_completed(result, response_code, headers, body, on_completed: Callable, http_request) -> void:
 	var response = JSON.parse_string(body.get_string_from_utf8())
 	var data:Array[Media] = []
 	
@@ -82,6 +85,8 @@ func _on_get_database_completed(result, response_code, headers, body, on_complet
 			get_property_by_id(media, NotionDatabaseKeys.property_type)["select"]["id"],
 			get_properties(get_property_by_id(media, NotionDatabaseKeys.property_properties)["multi_select"])
 			))
+	
+	http_request.queue_free()
 	
 	on_completed.call(data)
 
