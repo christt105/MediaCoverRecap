@@ -9,6 +9,8 @@ extends Control
 @export var save_covers_button:Button
 @export var display_text:Label
 
+@export var log_out_button:Button
+
 
 var _notion:NotionController
 var _database:NotionDatabase
@@ -36,12 +38,20 @@ func _ready() -> void:
 	
 	database_configuration.load.connect(_load_images)
 	save_covers_button.pressed.connect(_save_images)
+	
+	log_out_button.pressed.connect(_log_out)
 
 
 func init(notion:NotionController, database:NotionDatabase) -> void:
 	_notion = notion
 	_database = database
+	_notion.reparent(self)
 	set_types()
+
+
+func _log_out() -> void:
+	get_tree().change_scene_to_file("res://Login/LoginScreen.tscn")
+	self.queue_free()
 
 
 func set_types() -> void:

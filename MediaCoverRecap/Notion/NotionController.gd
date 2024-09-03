@@ -43,7 +43,7 @@ func get_media(database: String, notion_body: String, on_completed: Callable) ->
 		push_error(error_string(error))
 
 
-func get_database(database_id: String) -> NotionDatabase:
+func get_database(database_id: String, on_error:Callable = Callable()) -> NotionDatabase:
 	var http_request := HTTPRequest.new()
 	add_child(http_request)
 	
@@ -52,7 +52,9 @@ func get_database(database_id: String) -> NotionDatabase:
 		get_headers())
 	
 	if error != OK:
-		push_error(error_string(error))
+		var error_string = error_string(error)
+		push_error(error_string)
+		on_error.call(error_string)
 	
 	var request_response = await http_request.request_completed
 	var result = request_response[1]
@@ -60,6 +62,7 @@ func get_database(database_id: String) -> NotionDatabase:
 	if result != HTTPClient.RESPONSE_OK:
 		request_response = JSON.parse_string(request_response[3].get_string_from_utf8())
 		push_error(request_response.message)
+		on_error.call(request_response.message)
 		http_request.queue_free()
 		return null
 	

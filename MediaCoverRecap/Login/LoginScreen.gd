@@ -62,7 +62,7 @@ func on_login_button_pressed() -> void:
 	
 	await get_tree().process_frame
 	
-	var database := await notion.get_database(database_id)
+	var database := await notion.get_database(database_id, write_error)
 	if database == null:
 		return
 	

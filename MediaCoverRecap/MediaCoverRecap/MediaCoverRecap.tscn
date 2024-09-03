@@ -11,7 +11,7 @@ viewport_path = NodePath("Collage")
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uwa5c"]
 bg_color = Color(0.118581, 0.118581, 0.118581, 1)
 
-[node name="MediaCoverRecap" type="Control" node_paths=PackedStringArray("collage_display", "collage", "database_configuration", "display_configuration", "save_covers_button", "display_text")]
+[node name="MediaCoverRecap" type="Control" node_paths=PackedStringArray("collage_display", "collage", "database_configuration", "display_configuration", "save_covers_button", "display_text", "log_out_button")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -25,6 +25,7 @@ database_configuration = NodePath("HBoxContainer/MarginContainer2/VBoxContainer/
 display_configuration = NodePath("HBoxContainer/MarginContainer2/VBoxContainer/Configuration")
 save_covers_button = NodePath("HBoxContainer/MarginContainer2/VBoxContainer/SaveImageButton")
 display_text = NodePath("HBoxContainer/MarginContainer2/VBoxContainer/Database/DatabaseSection/MarginContainer/VBoxContainer/DisplayText")
+log_out_button = NodePath("LogOutButton")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 1
@@ -309,3 +310,9 @@ size_flags_vertical = 3
 theme_override_constants/h_separation = 0
 theme_override_constants/v_separation = 0
 columns = 6
+
+[node name="LogOutButton" type="Button" parent="."]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+text = "Log out"
