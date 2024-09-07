@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://b0gaf2pjnhtxk"]
 
 [ext_resource type="Script" path="res://Login/LoginScreen.gd" id="1_dhoeq"]
-[ext_resource type="Script" path="res://Login/FixPasteWeb.gd" id="2_kynpw"]
+[ext_resource type="Script" path="res://PasteWebWorkaround/FixPasteWeb.gd" id="2_kynpw"]
 
 [node name="LoginScreen" type="Control" node_paths=PackedStringArray("notion_api_secret_line_edit", "notion_media_database_id_line_edit", "error_label", "info_label", "login_button", "login_sample_button")]
 layout_mode = 3
@@ -11,15 +11,19 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_dhoeq")
-notion_api_secret_line_edit = NodePath("VBoxContainer2/MarginContainer/VBoxContainer/NotionApiSecretLineEdit")
-notion_media_database_id_line_edit = NodePath("VBoxContainer2/MarginContainer/VBoxContainer/NotionMediaDatabaseLineEdit")
+notion_api_secret_line_edit = NodePath("VBoxContainer2/MarginContainer/VBoxContainer/SecretLineEditWebFix/NotionApiSecretLineEdit")
+notion_media_database_id_line_edit = NodePath("VBoxContainer2/MarginContainer/VBoxContainer/IdLineEditWebFix/NotionMediaDatabaseLineEdit")
 error_label = NodePath("VBoxContainer2/MarginContainer/VBoxContainer/ErrorLabel")
 info_label = NodePath("VBoxContainer2/MarginContainer/VBoxContainer/InfoLabel")
 login_button = NodePath("VBoxContainer2/MarginContainer/VBoxContainer/LoginButton")
 login_sample_button = NodePath("VBoxContainer2/MarginContainer/VBoxContainer/LoginSampleButton")
 
-[node name="FixPasteWeb" type="Node" parent="."]
+[node name="FixPasteWeb" type="Node" parent="." node_paths=PackedStringArray("secret_webfix_button", "secret_line_edit", "id_webfix_button", "id_line_edit")]
 script = ExtResource("2_kynpw")
+secret_webfix_button = NodePath("../VBoxContainer2/MarginContainer/VBoxContainer/SecretLineEditWebFix/Button")
+secret_line_edit = NodePath("../VBoxContainer2/MarginContainer/VBoxContainer/SecretLineEditWebFix/NotionApiSecretLineEdit")
+id_webfix_button = NodePath("../VBoxContainer2/MarginContainer/VBoxContainer/IdLineEditWebFix/Button")
+id_line_edit = NodePath("../VBoxContainer2/MarginContainer/VBoxContainer/IdLineEditWebFix/NotionMediaDatabaseLineEdit")
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -45,15 +49,31 @@ theme_override_constants/margin_right = 50
 layout_mode = 2
 theme_override_constants/separation = 15
 
-[node name="NotionApiSecretLineEdit" type="LineEdit" parent="VBoxContainer2/MarginContainer/VBoxContainer"]
+[node name="SecretLineEditWebFix" type="HBoxContainer" parent="VBoxContainer2/MarginContainer/VBoxContainer"]
 layout_mode = 2
+
+[node name="NotionApiSecretLineEdit" type="LineEdit" parent="VBoxContainer2/MarginContainer/VBoxContainer/SecretLineEditWebFix"]
+layout_mode = 2
+size_flags_horizontal = 3
 size_flags_vertical = 6
 placeholder_text = "Notion Api Integration Secret"
 
-[node name="NotionMediaDatabaseLineEdit" type="LineEdit" parent="VBoxContainer2/MarginContainer/VBoxContainer"]
+[node name="Button" type="Button" parent="VBoxContainer2/MarginContainer/VBoxContainer/SecretLineEditWebFix"]
 layout_mode = 2
+text = "Paste"
+
+[node name="IdLineEditWebFix" type="HBoxContainer" parent="VBoxContainer2/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="NotionMediaDatabaseLineEdit" type="LineEdit" parent="VBoxContainer2/MarginContainer/VBoxContainer/IdLineEditWebFix"]
+layout_mode = 2
+size_flags_horizontal = 3
 size_flags_vertical = 6
 placeholder_text = "Notion Media Database Id"
+
+[node name="Button" type="Button" parent="VBoxContainer2/MarginContainer/VBoxContainer/IdLineEditWebFix"]
+layout_mode = 2
+text = "Paste"
 
 [node name="ErrorLabel" type="Label" parent="VBoxContainer2/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 25)
@@ -96,4 +116,4 @@ offset_bottom = -10.0
 grow_horizontal = 0
 grow_vertical = 0
 text = "Get your own Notion Database"
-uri = "https://www.notion.so/templates/media-tracker"
+uri = "https://christt105.notion.site/Template-1493d1da301448b5a197f1fdff57ce8d"
