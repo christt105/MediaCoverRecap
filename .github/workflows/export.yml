@@ -48,7 +48,7 @@ jobs:
           ls
           godot -v --headless --export-release "Linux" ../build/linux/$EXPORT_NAME.x86_64
       - name: Upload Artifacts
-        uses: actions/upload-artifact@v3.2.1-node20
+        uses: actions/upload-artifact@v4
         with:
           name: my-builds
           path: build
@@ -60,7 +60,7 @@ jobs:
       image: barichello/godot-ci:4.3
     steps:
       - name: Download build 
-        uses: actions/download-artifact@v4.1.8
+        uses: actions/download-artifact@v4
         with:
           name: my-builds
       - name: Upload bundles
